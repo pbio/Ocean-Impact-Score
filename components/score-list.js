@@ -25,7 +25,7 @@ export default function ScoreList({ scoresList, addInfo }) {
       "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
       "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
       "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
-      "Transportation", "Utilities"
+      "Transportation", "Utilities", "Real Estate"
     ];
 
     //Create one ScoreListItem for each company in the List, with state hooks
@@ -75,7 +75,6 @@ export default function ScoreList({ scoresList, addInfo }) {
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemText primary="SP500 Scores" />  
             <IndustrySelector 
             selectedIndustry={industry}
             setIndustry={setIndustry} 
