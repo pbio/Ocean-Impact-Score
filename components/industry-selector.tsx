@@ -39,7 +39,6 @@ export default function IndustrySelector({ selectedIndustry, setIndustry, indust
             value={selectedIndustry}
             label="Age"
             onChange={(event)=>{
-                console.log(event.target.value) 
                 setIndustry(event.target.value)
             }}
             >

@@ -2,6 +2,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Typography from '@mui/material/Typography';
 import { ArrowDownward, DragHandle, ArrowUpward } from '@mui/icons-material';
+import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Grid';
 
 
@@ -18,9 +19,9 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
     else return "black"
   }
   const setIcon = function(todayScore, thisMonthAvg) {
-    if (todayScore > thisMonthAvg) return <ArrowUpward color="green" />
-    else if (todayScore < thisMonthAvg) return <ArrowDownward color="red" />
-    else return <DragHandle />
+    if (todayScore > thisMonthAvg) return <Tooltip title="trending up"><ArrowUpward color="green" /></Tooltip>
+    else if (todayScore < thisMonthAvg) return <Tooltip title="trending down"><ArrowDownward color="red" /></Tooltip>
+    else return <Tooltip title="no change"><DragHandle /></Tooltip>
   }
   //close the dialog
   const handleClickOpen = () => {
