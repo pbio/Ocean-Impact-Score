@@ -13,15 +13,16 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
   const todayDate = "2022-11-07"
   const todayScore=data.daily[todayDate]
   const thisMonthAvg=data.monthly["2022-10"]
-  const setColor = function(todayScore, thisMonthAvg) {
-    if (todayScore > thisMonthAvg) return "green"
-    else if (todayScore < thisMonthAvg) return "red"
+  const rankChangeMY = data.ranking.month - data.ranking.year
+  const setColor = function(rankChange) {
+    if (rankChange > 0) return "green"
+    else if (rankChange < 0) return "red"
     else return "black"
   }
-  const setIcon = function(todayScore, thisMonthAvg) {
-    if (todayScore > thisMonthAvg) return <Tooltip title="trending up"><ArrowUpward color="green" /></Tooltip>
-    else if (todayScore < thisMonthAvg) return <Tooltip title="trending down"><ArrowDownward color="red" /></Tooltip>
-    else return <Tooltip title="no change"><DragHandle /></Tooltip>
+  const setIcon = function(rankChange) {
+    if (rankChange > 0) return <ArrowUpward color="green" />
+    else if (rankChange < 0) return <ArrowDownward color="red" />
+    else return <DragHandle />
   }
   //close the dialog
   const handleClickOpen = () => {
@@ -41,7 +42,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
   justifyContent="space-between"
   alignItems="baseline"
 >
-        <Grid md={6}>
+        <Grid md={4}>
           <Typography variant="h3" color="primary">
             {data.ticker}
           </Typography>
@@ -49,16 +50,23 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
             {name}
           </Typography>
         </Grid>
-        <Grid md={6} >
-        
+        <Grid md={4} >
+      <Typography 
+        variant="p" >
+        {"Today's Score: " + todayScore.toFixed(2)}
+        </Typography>
+        </Grid>
+        <Grid md={4} >
+        <Tooltip title="month-to-year trend">
       <Typography 
         variant="p" 
-        color={setColor(todayScore, thisMonthAvg)} 
+        color={setColor(rankChangeMY)} 
         display="flex" justifyContent="flex-end">
          
-        {"score: " + todayScore.toFixed(2)}
-        { setIcon(todayScore, thisMonthAvg) }
+        {"Rank change: " + rankChangeMY}
+        { setIcon(rankChangeMY) }
       </Typography>
+      </Tooltip>
       
         </Grid>
         </Grid>

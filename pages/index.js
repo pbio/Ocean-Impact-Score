@@ -2,8 +2,8 @@ import * as React from 'react';
 import Head from 'next/head'
 import Button from '@mui/material/Button';
 
-import { scoresList, addInfo } from '../lib/scores.js'
-import { Stoxx600, STOXX600Sectors } from '../lib/STOXX600Scores.js'
+import { scoresList, addInfo } from '../lib/SP500_scores.js'
+import { Stoxx600, STOXX600Sectors } from '../lib/STOXX600_scores.js'
 import ScoreList from '../components/score-list.js'
 import styles from '../styles/Home.module.css'
 
