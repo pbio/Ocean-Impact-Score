@@ -22,7 +22,7 @@ export default function ScoreList({ scoresList, addInfo }) {
     const [industry, setIndustry] = React.useState("");
 
     const industryList = [
-      "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
+      "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
       "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
       "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
       "Transportation", "Utilities", "Real Estate"
@@ -32,7 +32,6 @@ export default function ScoreList({ scoresList, addInfo }) {
     const myScores=[]
     if (searchTerm=="" && industry=="") //no search or industry filter
     scoresList.forEach((element, key)=>{
-        if (addInfo[element.ticker]) console.log(addInfo[element.ticker][0])
         myScores.push(
             <ScoreListItem 
                 key={key} 
