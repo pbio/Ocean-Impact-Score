@@ -17,7 +17,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
   const setColor = function(rankChange) {
     if (rankChange > 0) return "green"
     else if (rankChange < 0) return "red"
-    else return "black"
+    else return "white"
   }
   const setIcon = function(rankChange) {
     if (rankChange > 0) return <ArrowUpward color="green" />
@@ -37,26 +37,25 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
       <ListItemButton onClick={handleClickOpen} >
       <Grid
   container
-  spacing={3}
   direction="row"
   justifyContent="space-between"
   alignItems="baseline"
 >
-        <Grid md={4}>
+        <Grid md={4} sm={12}>
           <Typography variant="h3" color="primary">
             {data.ticker}
           </Typography>
-          <Typography variant="p" color="black">
+          <Typography variant="p" color="white">
             {name}
           </Typography>
         </Grid>
-        <Grid md={4} >
+        <Grid md={4} sm={6}>
       <Typography 
         variant="p" >
         {"Today's Score: " + todayScore.toFixed(2)}
         </Typography>
         </Grid>
-        <Grid md={4} >
+        <Grid md={4} sm={6}>
         <Tooltip title="month-to-year trend">
       <Typography 
         variant="p" 

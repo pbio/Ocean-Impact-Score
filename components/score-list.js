@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 import ScoreDialog from './score-dialog.tsx';
 import ScoreListItem from './score-list-item.js';
@@ -73,17 +74,29 @@ export default function ScoreList({ scoresList, addInfo }) {
     <Box sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
-          <ListItem disablePadding>
+          <ListItem >
+          <Grid
+          container
+          spacing={3}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="baseline"
+        >
+            <Grid md={6} spacing={3}>
             <IndustrySelector 
             selectedIndustry={industry}
             setIndustry={setIndustry} 
             industryList={industryList} />
+            </Grid>
+            <Grid md={6} spacing={3}>
             <TextField 
               variant="outlined" 
               label="Search" 
               onChange={event => setSearch(event.target.value)} 
               size="small" 
-              display="flex" justifyContent="flex-end" />
+               />
+              </Grid>
+              </Grid>
           </ListItem>
         </List>
       </nav>
