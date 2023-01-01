@@ -6,16 +6,17 @@ import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { scoresList, addInfo } from '../lib/SP500_scores.js'
+import { SP500, SP500Sectors } from '../lib/SP500_scores.js'
 import { Stoxx600, STOXX600Sectors } from '../lib/STOXX600_scores.js'
 import ScoreList from '../components/score-list.js'
 import styles from '../styles/Home.module.css'
 
 export async function getStaticProps() {
-  scoresList.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
+  //SP500.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
+  //Stoxx600.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
   return {
     props: {
-      scoresList, addInfo, Stoxx600, STOXX600Sectors
+      SP500, SP500Sectors, Stoxx600, STOXX600Sectors
     },
   };
 }
@@ -46,7 +47,7 @@ export default function Home({ scoresList }) {
         <Button onClick={()=>setMarketType(false)}>EU600</Button>
         </Box>
 
-        <ScoreList scoresList={ marketType ? scoresList : Stoxx600 } addInfo={ marketType ? addInfo :  STOXX600Sectors } />
+        <ScoreList scoresList={ marketType ? SP500 : Stoxx600 } addInfo={ marketType ? SP500Sectors :  STOXX600Sectors } />
         
         </Container>
         </main>

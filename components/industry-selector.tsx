@@ -34,10 +34,9 @@ export default function IndustrySelector({ selectedIndustry, setIndustry, indust
     <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Industry</InputLabel>
          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            id="select industry"
             value={selectedIndustry}
-            label="Age"
+            label="industry"
             onChange={(event)=>{
                 setIndustry(event.target.value)
             }}

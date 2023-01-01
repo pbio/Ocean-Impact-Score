@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 
 import getDate from "../lib/getDate.js"
 import ScorePlot from "./score-plot.js"
-export default function ScoreItem ({data, setOpen, setCompany, name}) {
+export default function ScoreItem ({data, setOpen, setCompany, name, sort}) {
   //const todayDate = getDate(); //when go live, need to implement the today date checker
   const todayDate = "2022-11-07"
   const todayScore=data.daily[todayDate]
@@ -52,7 +52,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name}) {
         <Grid md={4} sm={6}>
       <Typography 
         variant="p" >
-        {"Today's Score: " + todayScore.toFixed(2)}
+        {(sort<3) ? "Today's Score: " + todayScore.toFixed(2) : "This Year's Score: " + data.yearly["2022"]}
         </Typography>
         </Grid>
         <Grid md={4} sm={6}>
