@@ -20,10 +20,16 @@ export default function IndustrySelector({ selectedIndustry, setIndustry, indust
             }}
             >
             {industryList.map(function(element : string){
-                return <MenuItem 
+                return element ? 
+                        <MenuItem 
                             key={element} 
                             value={element}>
                         {element}
+                        </MenuItem> :
+                        <MenuItem 
+                        key={element} 
+                        value={element}>
+                        Show All Companies
                         </MenuItem>
             })}
         </Select>

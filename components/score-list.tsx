@@ -80,7 +80,7 @@ export default function ScoreList({ scoresList, addInfo }) {
     });
     else //Execute if we have a search in process
     scoresList.forEach((element, key)=>{
-      if (element.ticker.includes(searchTerm))
+      if (element.ticker.toLowerCase().includes(searchTerm.toLowerCase()))
       myScores.push(
           <ScoreListItem 
               key={key}
@@ -105,13 +105,13 @@ export default function ScoreList({ scoresList, addInfo }) {
           justifyContent="space-between"
           alignItems="baseline"
         >
-            <Grid md={5} xs={6} spacing={3}>
+            <Grid md={4} xs={6} spacing={3}>
             <IndustrySelector 
             selectedIndustry={industry}
             setIndustry={setIndustry} 
             industryList={industryList} />
             </Grid>
-            <Grid md={2} xs={6} spacing={3}>
+            <Grid md={4} xs={6} spacing={3}>
             <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                 <Select
@@ -145,7 +145,7 @@ export default function ScoreList({ scoresList, addInfo }) {
                 </Select>
             </FormControl>
             </Grid>
-            <Grid md={5} xs={12} spacing={3}>
+            <Grid md={4} xs={12} spacing={3}>
             <TextField 
               variant="outlined" 
               label="Search" 
