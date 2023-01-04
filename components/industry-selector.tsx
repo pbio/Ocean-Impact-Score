@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import type { AppProps } from 'next/app'
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,29 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-// export function IndustrySelector2({ setIndustry, industryList}) {
-//     const buttons= []
-//     industryList.forEach(function(element){
-//         buttons.push(
-//         <Button 
-//             key={element} 
-//             onClick={()=>{setIndustry(element)}}>
-//             {element}
-//         </Button>);
-//     })
-//   return (<>{buttons}</>)
-// }
-
-export default function IndustrySelector({ selectedIndustry, setIndustry, industryList}) {
-    const items= []
-    industryList.forEach(function(element){
-        items.push(
-        <MenuItem 
-            key={element} 
-            value={element}>
-        {element}
-        </MenuItem>);
-    })
+export default function IndustrySelector({ selectedIndustry, setIndustry, industryList}: AppProps) {
     return (    
     <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Industry</InputLabel>
@@ -41,7 +19,13 @@ export default function IndustrySelector({ selectedIndustry, setIndustry, indust
                 setIndustry(event.target.value)
             }}
             >
-            {items}
+            {industryList.map(function(element : string){
+                return <MenuItem 
+                            key={element} 
+                            value={element}>
+                        {element}
+                        </MenuItem>
+            })}
         </Select>
   </FormControl>);
 }

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import type { AppProps } from 'next/app'
+
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -50,10 +52,10 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}) {
+export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps) {
   const [plotType, setPlotType] = React.useState(0);
-  const plotTypeTitle = ["Daily", "Monthly", "Yearly"]
-  const setData = function(plotType) {
+  const plotTypeTitle: Array<String> = ["Daily", "Monthly", "Yearly"]
+  const setData = function(plotType: Number) {
     if (plotType==2) return yearly
     else if (plotType==1) return monthly
     else return daily
@@ -65,7 +67,7 @@ export default function CustomizedDialogs({ticker, monthly, yearly, daily, open,
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={() => setOpen(false)}>
-          {ticker + " " + plotTypeTitle[plotType] + " scores"}
+          {ticker + " " + plotTypeTitle[plotType] + " Scores"}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <ScorePlot 

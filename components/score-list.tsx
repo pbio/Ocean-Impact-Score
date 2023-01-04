@@ -6,8 +6,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
@@ -15,9 +13,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import ScoreDialog from './score-dialog.tsx';
-import ScoreListItem from './score-list-item.js';
-import IndustrySelector from './industry-selector.tsx'
+import ScoreDialog from './score-dialog';
+import ScoreListItem from './score-list-item';
+import IndustrySelector from './industry-selector'
 
 export default function ScoreList({ scoresList, addInfo }) {
     //Handle the opening and closing of the dialog
@@ -34,18 +32,25 @@ export default function ScoreList({ scoresList, addInfo }) {
       "Transportation", "Utilities", "Real Estate"
     ];
 
+
+    //handle Sort type
+    switch(sort){
+      case 1: //latest day high - low
+        scoresList.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
+        break;
+      case 2: //latest day low - high
+        scoresList.sort((a, b) => a.daily["2022-11-07"]-b.daily["2022-11-07"])
+        break;
+      case 3: //latest yearly low - high
+        scoresList.sort((a, b) => b.yearly["2022"]-a.yearly["2022"])
+        break;
+      case 4: //latest yearly high - low
+        scoresList.sort((a, b) => a.yearly["2022"]-b.yearly["2022"])
+        break;
+    }
     //Create one ScoreListItem for each company in the List, with state hooks
     const myScores=[]
-    //handle Sort type
-    if (sort==1) //latest day high - low
-      scoresList.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
-    else if (sort==2) //latest day low - high
-      scoresList.sort((a, b) => a.daily["2022-11-07"]-b.daily["2022-11-07"])
-    else if (sort==3) //latest yearly low - high
-      scoresList.sort((a, b) => b.yearly["2022"]-a.yearly["2022"])
-    else if (sort==4) //latest yearly high - low
-      scoresList.sort((a, b) => a.yearly["2022"]-b.yearly["2022"])
-      
+    
     if (searchTerm=="" && industry=="") //no search or industry filter
     scoresList.forEach((element, key)=>{
         myScores.push(
@@ -100,21 +105,13 @@ export default function ScoreList({ scoresList, addInfo }) {
           justifyContent="space-between"
           alignItems="baseline"
         >
-            <Grid md={5} spacing={3}>
+            <Grid md={5} xs={6} spacing={3}>
             <IndustrySelector 
             selectedIndustry={industry}
             setIndustry={setIndustry} 
             industryList={industryList} />
             </Grid>
-            <Grid md={5} spacing={3}>
-            <TextField 
-              variant="outlined" 
-              label="Search" 
-              onChange={event => setSearch(event.target.value)} 
-              size="small" 
-               />
-            </Grid>
-            <Grid md={2} spacing={3}>
+            <Grid md={2} xs={6} spacing={3}>
             <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                 <Select
@@ -148,7 +145,14 @@ export default function ScoreList({ scoresList, addInfo }) {
                 </Select>
             </FormControl>
             </Grid>
-
+            <Grid md={5} xs={12} spacing={3}>
+            <TextField 
+              variant="outlined" 
+              label="Search" 
+              onChange={event => setSearch(event.target.value)} 
+              size="small" 
+               />
+            </Grid>
             </Grid>
           </ListItem>
         </List>

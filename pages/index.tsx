@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -8,12 +9,10 @@ import Typography from '@mui/material/Typography';
 
 import { SP500, SP500Sectors } from '../lib/SP500_scores.js'
 import { Stoxx600, STOXX600Sectors } from '../lib/STOXX600_scores.js'
-import ScoreList from '../components/score-list.js'
+import ScoreList from '../components/score-list'
 import styles from '../styles/Home.module.css'
 
 export async function getStaticProps() {
-  //SP500.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
-  //Stoxx600.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
   return {
     props: {
       SP500, SP500Sectors, Stoxx600, STOXX600Sectors
@@ -23,10 +22,10 @@ export async function getStaticProps() {
 
 
 
-export default function Home({ scoresList }) {
+export default function Home({ scoresList }: AppProps) {
   const [marketType, setMarketType] = React.useState(true)
   //const todayDate = getDate();
-  const todayDate = "December 8th 2022";
+  const todayDate = "January 4, 2022";
   return (
       <span>
       <Head>
@@ -38,10 +37,10 @@ export default function Home({ scoresList }) {
       <Typography variant="h4" color="white">
           Ocean Impact Score
         </Typography>
-        <Typography variant= "p" color= "white">
+        <Typography variant= "body1" color= "white">
           An Ocean Impact Score for publicly listed companies
         </Typography>
-        <Typography variant= "p" >{todayDate}</Typography>
+        <Typography variant= "body1" >{todayDate}</Typography>
         <Box sx={{ width: 300, height: 50}} >
         <Button onClick={()=>setMarketType(true)}>SP500</Button>
         <Button onClick={()=>setMarketType(false)}>EU600</Button>
