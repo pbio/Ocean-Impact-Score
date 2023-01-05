@@ -22,7 +22,8 @@ export async function getStaticProps() {
 
 
 
-export default function Home({ scoresList }: AppProps) {
+export default function Home(props: AppProps) {
+  const { pageProps } = props;
   const [marketType, setMarketType] = React.useState(true)
   //const todayDate = getDate();
   const todayDate = "January 4, 2022";
@@ -46,7 +47,10 @@ export default function Home({ scoresList }: AppProps) {
         <Button onClick={()=>setMarketType(false)}>EU600</Button>
         </Box>
 
-        <ScoreList scoresList={ marketType ? SP500 : Stoxx600 } addInfo={ marketType ? SP500Sectors :  STOXX600Sectors } />
+        <ScoreList 
+          scoresList={ marketType ? SP500 : Stoxx600 } 
+          addInfo={ marketType ? SP500Sectors :  STOXX600Sectors } 
+          {...pageProps} />
         
         </Container>
         </main>

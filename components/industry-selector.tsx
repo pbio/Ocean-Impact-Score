@@ -8,7 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 interface CustomPageProps { 
-    selectedIndustry: String,
+    selectedIndustry: string,
     setIndustry: React.Dispatch<React.SetStateAction<string>>
 }
 
@@ -16,7 +16,7 @@ interface CustomPageProps {
 export default function IndustrySelector(props: AppProps & CustomPageProps ) {
     //let selectedIndustry: String = props.selectedIndustry;
     //let setIndustry: React.Dispatch<React.SetStateAction<string>> = props.setIndustry;
-    const industryList = [
+    const industryList: string[] = [
         "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
         "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
         "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
@@ -35,16 +35,16 @@ export default function IndustrySelector(props: AppProps & CustomPageProps ) {
             >
             {industryList.map(function(element : string){
                 return element ? 
-                        <MenuItem 
-                            key={element} 
-                            value={element}>
-                        {element}
-                        </MenuItem> :
-                        <MenuItem 
+                    <MenuItem 
                         key={element} 
                         value={element}>
+                        {element}
+                    </MenuItem> :
+                    <MenuItem 
+                        key={element}
+                        value={element}>
                         Show All Companies
-                        </MenuItem>
+                    </MenuItem>
             })}
         </Select>
   </FormControl>);

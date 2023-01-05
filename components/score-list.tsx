@@ -17,20 +17,14 @@ import ScoreDialog from './score-dialog';
 import ScoreListItem from './score-list-item';
 import IndustrySelector from './industry-selector'
 
-export default function ScoreList({ scoresList, addInfo }) {
+export default function ScoreList({ scoresList, addInfo, pageProps }) {
     //Handle the opening and closing of the dialog
-    const [open, setOpen] = React.useState(false);
-    const [selectedCompany, setCompany] = React.useState(scoresList[0]);
+    const [open, setOpen] = React.useState<boolean>(false);
+    const [selectedCompany, setCompany] = React.useState<any>(scoresList[0]);
     const [searchTerm, setSearch] = React.useState("");
     const [industry, setIndustry] = React.useState("");
-    const [sort, setSort] = React.useState(1);
+    const [sort, setSort] = React.useState<string | number>(1);
 
-    const industryList = [
-      "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
-      "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
-      "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
-      "Transportation", "Utilities", "Real Estate"
-    ];
 
 
     //handle Sort type
@@ -61,6 +55,7 @@ export default function ScoreList({ scoresList, addInfo }) {
                 setOpen={setOpen} 
                 setCompany={setCompany}
                 sort={sort}
+                {...pageProps}
                 />
             );
     });
@@ -75,6 +70,7 @@ export default function ScoreList({ scoresList, addInfo }) {
               setOpen={setOpen}
               setCompany={setCompany}
               sort={sort}
+              {...pageProps}
               />
           );
     });
@@ -89,6 +85,7 @@ export default function ScoreList({ scoresList, addInfo }) {
               setOpen={setOpen}
               setCompany={setCompany}
               sort={sort}
+              {...pageProps}
               />
           );
     });
@@ -107,9 +104,9 @@ export default function ScoreList({ scoresList, addInfo }) {
         >
             <Grid md={4} xs={6} spacing={3}>
             <IndustrySelector 
-            selectedIndustry={industry}
-            setIndustry={setIndustry} 
-            industryList={industryList} />
+              selectedIndustry={industry}
+              setIndustry={setIndustry} 
+              {...pageProps} />
             </Grid>
             <Grid md={4} xs={6} spacing={3}>
             <FormControl fullWidth size="small">
@@ -118,9 +115,7 @@ export default function ScoreList({ scoresList, addInfo }) {
                     id="select sort"
                     value={sort}
                     label="sort"
-                    onChange={(event)=>{
-                        setSort(event.target.value)
-                    }}
+                    onChange={event => setSort(event.target.value)}
                     >
                     <MenuItem 
                         key={1} 
@@ -165,12 +160,13 @@ export default function ScoreList({ scoresList, addInfo }) {
         
       </nav>
       <ScoreDialog 
-                ticker={selectedCompany.ticker} 
-                monthly={selectedCompany.monthly} 
-                yearly={selectedCompany.yearly} 
-                daily={selectedCompany.daily}
-                open={open} 
-                setOpen={setOpen} />
+          ticker={selectedCompany.ticker} 
+          monthly={selectedCompany.monthly} 
+          yearly={selectedCompany.yearly} 
+          daily={selectedCompany.daily}
+          open={open} 
+          setOpen={setOpen}
+          {...pageProps} />
     </Box>
   );
 }

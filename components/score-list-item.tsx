@@ -7,8 +7,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Grid';
 
 //import getDate from "../lib/getDate.ts"
+interface CustomPageProps { 
+  data: any,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setCompany: React.Dispatch<React.SetStateAction<object>>,
+  name: string,
+  sort: number
+}
 
-export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps) {
+export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps & CustomPageProps) {
   //const todayDate = getDate(); //when go live, need to implement the today date checker
   const todayDate: string = "2022-11-07"
   const todayScore: number = data.daily[todayDate]

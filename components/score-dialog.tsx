@@ -51,8 +51,16 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     </DialogTitle>
   );
 }
+interface CustomPageProps { 
+  ticker: String,
+  daily: Object,
+  monthly: Object,
+  yearly: Object,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  open: boolean
+}
 
-export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps) {
+export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps & CustomPageProps) {
   const [plotType, setPlotType] = React.useState(0);
   const plotTypeTitle: Array<String> = ["Daily", "Monthly", "Yearly"]
   const setData = function(plotType: Number) {

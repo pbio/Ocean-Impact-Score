@@ -17,7 +17,7 @@ interface MyAppProps extends AppProps {
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-  },
+  }
 });
 
 export default function MyApp(props: MyAppProps) {
