@@ -7,16 +7,30 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-export default function IndustrySelector({ selectedIndustry, setIndustry, industryList}: AppProps) {
-    return (    
+interface CustomPageProps { 
+    selectedIndustry: String,
+    setIndustry: React.Dispatch<React.SetStateAction<string>>
+}
+
+//export default function IndustrySelector({ selectedIndustry, setIndustry}: AppProps<CustomPageProps> ) {
+export default function IndustrySelector(props: AppProps & CustomPageProps ) {
+    //let selectedIndustry: String = props.selectedIndustry;
+    //let setIndustry: React.Dispatch<React.SetStateAction<string>> = props.setIndustry;
+    const industryList = [
+        "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
+        "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
+        "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
+        "Transportation", "Utilities", "Real Estate"
+      ];
+    return (
     <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Industry</InputLabel>
          <Select
             id="select industry"
-            value={selectedIndustry}
+            value={props.selectedIndustry}
             label="industry"
             onChange={(event)=>{
-                setIndustry(event.target.value)
+                props.setIndustry(event.target.value)
             }}
             >
             {industryList.map(function(element : string){
