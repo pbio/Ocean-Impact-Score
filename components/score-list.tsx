@@ -13,14 +13,21 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import styled from '@mui/system/styled';
 
 import ScoreDialog from './score-dialog';
 import ScoreListItem from './score-list-item';
 import IndustrySelector from './industry-selector'
+
 interface CustomPageProps { 
   scoresList: any,
   addInfo: any
 }
+
+const Item = styled('div')(({ theme }) => ({
+  //padding: theme.spacing(1),
+  //textAlign: 'center'
+}));
 
 export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps & CustomPageProps) {
     //Handle the opening and closing of the dialog
@@ -29,8 +36,6 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     const [searchTerm, setSearch] = React.useState("");
     const [industry, setIndustry] = React.useState("");
     const [sort, setSort] = React.useState<string | number>(1);
-
-
 
     //handle Sort type
     switch(sort){
@@ -107,13 +112,16 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
           justifyContent="space-between"
           alignItems="baseline"
         >
-            <Grid md={4} xs={6} spacing={3}>
+          <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} >
+            <Item>
             <IndustrySelector 
               selectedIndustry={industry}
               setIndustry={setIndustry} 
               {...pageProps} />
+            </Item>
             </Grid>
-            <Grid md={4} xs={6} spacing={3}>
+            <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} >
+            <Item>
             <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                 <Select
@@ -144,25 +152,29 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                     </MenuItem>
                 </Select>
             </FormControl>
+            </Item>
             </Grid>
-            <Grid md={4} xs={12} spacing={3}>
-            <TextField 
-              variant="outlined" 
-              label="Search" 
-              onChange={event => setSearch(event.target.value)} 
-              size="small" 
-               />
+            <Grid 
+              md={4} xs={12} 
+              spacing={3} sx={{ p: 2 }} >
+              <Item>
+              <TextField 
+                variant="outlined" 
+                label="Search" 
+                onChange={event => setSearch(event.target.value)} 
+                size="small" 
+                />
+                </Item>
             </Grid>
-            </Grid>
+          </Grid>
           </ListItem>
         </List>
       </nav>
       <Divider />
       <nav aria-label="secondary mailbox folders">
         <List>
-            { myScores }
+          { myScores }
         </List>
-        
       </nav>
       <ScoreDialog 
           ticker={selectedCompany.ticker} 
