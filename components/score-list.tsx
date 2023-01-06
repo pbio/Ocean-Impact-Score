@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { AppProps } from 'next/app'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -16,8 +17,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ScoreDialog from './score-dialog';
 import ScoreListItem from './score-list-item';
 import IndustrySelector from './industry-selector'
+interface CustomPageProps { 
+  scoresList: any,
+  addInfo: any
+}
 
-export default function ScoreList({ scoresList, addInfo, pageProps }) {
+export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps & CustomPageProps) {
     //Handle the opening and closing of the dialog
     const [open, setOpen] = React.useState<boolean>(false);
     const [selectedCompany, setCompany] = React.useState<any>(scoresList[0]);
