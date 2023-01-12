@@ -14,8 +14,6 @@ interface CustomPageProps {
 
 //export default function IndustrySelector({ selectedIndustry, setIndustry}: AppProps<CustomPageProps> ) {
 export default function IndustrySelector(props: AppProps & CustomPageProps ) {
-    //let selectedIndustry: String = props.selectedIndustry;
-    //let setIndustry: React.Dispatch<React.SetStateAction<string>> = props.setIndustry;
     const industryList: string[] = [
         "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
         "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
@@ -24,9 +22,8 @@ export default function IndustrySelector(props: AppProps & CustomPageProps ) {
       ];
     return (
     <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+        <InputLabel id="select-industry">Industry</InputLabel>
          <Select
-            id="select industry"
             value={props.selectedIndustry}
             label="industry"
             onChange={(event)=>{
