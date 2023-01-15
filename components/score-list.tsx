@@ -20,7 +20,7 @@ import ScoreListItem from './score-list-item';
 import IndustrySelector from './industry-selector'
 
 interface CustomPageProps { 
-  scoresList: any,
+  scoresList: Item[],
   addInfo: any
 }
 
@@ -28,6 +28,14 @@ const Item = styled('div')(({ theme }) => ({
   //padding: theme.spacing(1),
   //textAlign: 'center'
 }));
+
+interface Item {
+  ticker: string,
+  daily: any,
+  monthly: any,
+  yearly: any,
+  ranking: {year: number, month: number, day: number}
+}
 
 export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps & CustomPageProps): JSX.Element {
     //Handle the opening and closing of the dialog
@@ -40,16 +48,16 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     //handle Sort type
     switch(sort){
       case 1: //latest day high - low
-        scoresList.sort((a, b) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
+        scoresList.sort((a: Item, b: Item) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
         break;
       case 2: //latest day low - high
-        scoresList.sort((a, b) => a.daily["2022-11-07"]-b.daily["2022-11-07"])
+        scoresList.sort((a: Item, b: Item) => a.daily["2022-11-07"]-b.daily["2022-11-07"])
         break;
       case 3: //latest yearly low - high
-        scoresList.sort((a, b) => b.yearly["2022"]-a.yearly["2022"])
+        scoresList.sort((a: Item, b: Item) => b.yearly["2022"]-a.yearly["2022"])
         break;
       case 4: //latest yearly high - low
-        scoresList.sort((a, b) => a.yearly["2022"]-b.yearly["2022"])
+        scoresList.sort((a: Item, b: Item) => a.yearly["2022"]-b.yearly["2022"])
         break;
     }
 
