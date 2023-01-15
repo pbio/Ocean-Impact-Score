@@ -15,7 +15,7 @@ interface CustomPageProps {
   sort: number
 }
 
-export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps & CustomPageProps) {
+export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps & CustomPageProps):JSX.Element {
   //const todayDate = getDate(); //when go live, need to implement the today date checker
   const todayDate: string = "2022-11-07"
   const todayScore: number = data.daily[todayDate]

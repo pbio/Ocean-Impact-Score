@@ -13,7 +13,7 @@ interface CustomPageProps {
 }
 
 //export default function IndustrySelector({ selectedIndustry, setIndustry}: AppProps<CustomPageProps> ) {
-export default function IndustrySelector(props: AppProps & CustomPageProps ) {
+export default function IndustrySelector(props: AppProps & CustomPageProps ):JSX.Element {
     const industryList: string[] = [
         "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
         "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 

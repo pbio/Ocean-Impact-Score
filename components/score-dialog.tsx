@@ -60,7 +60,7 @@ interface CustomPageProps {
   open: boolean
 }
 
-export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps & CustomPageProps) {
+export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps & CustomPageProps):JSX.Element {
   const [plotType, setPlotType] = React.useState(0);
   const plotTypeTitle: Array<String> = ["Daily", "Monthly", "Yearly"]
   const setData = function(plotType: Number) {

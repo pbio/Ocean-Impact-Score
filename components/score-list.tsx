@@ -29,7 +29,7 @@ const Item = styled('div')(({ theme }) => ({
   //textAlign: 'center'
 }));
 
-export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps & CustomPageProps) {
+export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps & CustomPageProps): JSX.Element {
     //Handle the opening and closing of the dialog
     const [open, setOpen] = React.useState<boolean>(false);
     const [selectedCompany, setCompany] = React.useState<any>(scoresList[0]);
@@ -52,53 +52,6 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
         scoresList.sort((a, b) => a.yearly["2022"]-b.yearly["2022"])
         break;
     }
-    //Create one ScoreListItem for each company in the List, with state hooks
-    const myScores=[]
-    
-    if (searchTerm=="" && industry=="") //no search or industry filter
-    scoresList.forEach((element, key)=>{
-        myScores.push(
-            <ScoreListItem 
-                key={key} 
-                data={element}
-                name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
-                setOpen={setOpen} 
-                setCompany={setCompany}
-                sort={sort}
-                {...pageProps}
-                />
-            );
-    });
-    else if (industry) //Execute if we have a industry filter selected
-    scoresList.forEach((element, key)=>{
-      if (addInfo[element.ticker] && addInfo[element.ticker][0]==industry)
-      myScores.push(
-          <ScoreListItem 
-              key={key}
-              data={element}
-              name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
-              setOpen={setOpen}
-              setCompany={setCompany}
-              sort={sort}
-              {...pageProps}
-              />
-          );
-    });
-    else //Execute if we have a search in process
-    scoresList.forEach((element, key)=>{
-      if (element.ticker.toLowerCase().includes(searchTerm.toLowerCase()))
-      myScores.push(
-          <ScoreListItem 
-              key={key}
-              data={element}
-              name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
-              setOpen={setOpen}
-              setCompany={setCompany}
-              sort={sort}
-              {...pageProps}
-              />
-          );
-    });
 
     return (
     <Box sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
@@ -173,7 +126,40 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
       <Divider />
       <nav aria-label="secondary mailbox folders">
         <List>
-          { myScores }
+          {!industry ? 
+          scoresList
+            .filter((element)=>{ //search
+              return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
+            }) 
+            .slice(0,50) //only show the top 50
+            .map(element=>
+              <ScoreListItem 
+                  key={element.ticker} 
+                  data={element}
+                  name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
+                  setOpen={setOpen} 
+                  setCompany={setCompany}
+                  sort={sort}
+                  {...pageProps}
+                  />) 
+          : 
+          scoresList
+            .filter(element => addInfo[element.ticker]?.[0]==industry ) //industry category filter
+            .filter((element)=>{
+              return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
+            }) //search
+            .slice(0,50) //only show the top 50
+            .map(element=>
+                <ScoreListItem 
+                    key={element.ticker}
+                    data={element}
+                    name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
+                    setOpen={setOpen}
+                    setCompany={setCompany}
+                    sort={sort}
+                    {...pageProps}
+                    />)
+          }
         </List>
       </nav>
       <ScoreDialog 
