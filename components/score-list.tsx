@@ -46,20 +46,12 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     const [sort, setSort] = React.useState<string | number>(1);
 
     //handle Sort type
-    switch(sort){
-      case 1: //latest day high - low
-        scoresList.sort((a: Item, b: Item) => b.daily["2022-11-07"]-a.daily["2022-11-07"])
-        break;
-      case 2: //latest day low - high
-        scoresList.sort((a: Item, b: Item) => a.daily["2022-11-07"]-b.daily["2022-11-07"])
-        break;
-      case 3: //latest yearly low - high
-        scoresList.sort((a: Item, b: Item) => b.yearly["2022"]-a.yearly["2022"])
-        break;
-      case 4: //latest yearly high - low
-        scoresList.sort((a: Item, b: Item) => a.yearly["2022"]-b.yearly["2022"])
-        break;
-    }
+    const hst: Array<Array<String | Number>> = [
+      ["daily", "2022-11-06", "2022-11-07",1],
+      ["daily", "2022-11-06", "2022-11-07", -1],
+      ["yearly", "2021", "2022", 1],
+      ["yearly", "2021", "2022", -1]
+    ]
 
     return (
     <Box sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
@@ -73,7 +65,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
           justifyContent="space-between"
           alignItems="baseline"
         >
-          <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} >
+          <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} item>
             <Item>
             <IndustrySelector 
               selectedIndustry={industry}
@@ -81,7 +73,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
               {...pageProps} />
             </Item>
             </Grid>
-            <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} >
+            <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} item>
             <Item>
             <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
@@ -117,7 +109,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
             </Grid>
             <Grid 
               md={4} xs={12} 
-              spacing={3} sx={{ p: 2 }} >
+              spacing={3} sx={{ p: 2 }} item>
               <Item>
               <TextField 
                 variant="outlined" 
@@ -134,13 +126,20 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
       <Divider />
       <nav aria-label="secondary mailbox folders">
         <List>
-          {!industry ? 
+          {
           scoresList
-            .filter((element)=>{ //search
+          .sort((a: Item, b: Item) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]])
+          .map((element, index) => ({...element, rank:[hst[sort-1][3]*index]})) // add yesterday's rank
+          .sort((a: Item, b: Item) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][2]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][2]])
+          .map((element, index) => { 
+            element.rank[1]=hst[sort-1][3]*index;
+            return element })     //add today's rank
+          .filter(element => addInfo[element.ticker]?.[0].includes(industry) ) //industry category filter
+          .filter((element)=>{ //search
               return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
             }) 
-            .slice(0,50) //only show the top 50
-            .map(element=>
+          .slice(0,50) //only show the top 50
+          .map(element=>
               <ScoreListItem 
                   key={element.ticker} 
                   data={element}
@@ -150,23 +149,6 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                   sort={sort}
                   {...pageProps}
                   />) 
-          : 
-          scoresList
-            .filter(element => addInfo[element.ticker]?.[0]==industry ) //industry category filter
-            .filter((element)=>{
-              return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
-            }) //search
-            .slice(0,50) //only show the top 50
-            .map(element=>
-                <ScoreListItem 
-                    key={element.ticker}
-                    data={element}
-                    name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
-                    setOpen={setOpen}
-                    setCompany={setCompany}
-                    sort={sort}
-                    {...pageProps}
-                    />)
           }
         </List>
       </nav>
