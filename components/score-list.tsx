@@ -45,10 +45,12 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     const [industry, setIndustry] = React.useState("");
     const [sort, setSort] = React.useState<string | number>(1);
 
-    //handle Sort type
+    //Handle Sort Type
     const hst: Array<Array<String | Number>> = [
       ["daily", "2022-11-06", "2022-11-07",1],
       ["daily", "2022-11-06", "2022-11-07", -1],
+      ["monthly", "2021-10", "2022-11", 1],
+      ["monthly", "2021-10", "2022-11", -1],
       ["yearly", "2021", "2022", 1],
       ["yearly", "2021", "2022", -1]
     ]
@@ -96,11 +98,21 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                     <MenuItem 
                         key={3} 
                         value={3}>
-                      highest yearly
+                      highest monthly
                     </MenuItem>
                     <MenuItem 
                         key={4} 
                         value={4}>
+                      lowest monthly
+                    </MenuItem>
+                    <MenuItem 
+                        key={5} 
+                        value={5}>
+                      highest yearly
+                    </MenuItem>
+                    <MenuItem 
+                        key={6} 
+                        value={6}>
                       lowest yearly
                     </MenuItem>
                 </Select>
