@@ -43,10 +43,10 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     const [selectedCompany, setCompany] = React.useState<any>(scoresList[0]);
     const [searchTerm, setSearch] = React.useState("");
     const [industry, setIndustry] = React.useState("");
-    const [sort, setSort] = React.useState<string | number>(1);
+    const [sort, setSort] = React.useState<number>(1);
 
     //Handle Sort Type
-    const hst: Array<Array<String | Number>> = [
+    const hst: Array<[string, string, string, number]> = [
       ["daily", "2022-11-06", "2022-11-07",1],
       ["daily", "2022-11-06", "2022-11-07", -1],
       ["monthly", "2021-10", "2022-11", 1],
@@ -83,7 +83,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                     id="select sort"
                     value={sort}
                     label="sort"
-                    onChange={event => setSort(event.target.value)}
+                    onChange={event => setSort(Number(event.target.value))}
                     >
                     <MenuItem 
                         key={1} 
@@ -140,9 +140,9 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
         <List>
           {
           scoresList
-          .sort((a: Item, b: Item) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]])
+          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]])
           .map((element, index) => ({...element, rank:[hst[sort-1][3]*index]})) // add yesterday's rank
-          .sort((a: Item, b: Item) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][2]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][2]])
+          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][2]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][2]])
           .map((element, index) => { 
             element.rank[1]=hst[sort-1][3]*index;
             return element })     //add today's rank
