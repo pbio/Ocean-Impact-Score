@@ -6,9 +6,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { SP500, SP500Sectors } from './lib/SP500_scores.js'
-import { STOXX600, STOXX600Sectors } from './lib/STOXX600_scores.js'
-import ScoreList from './components/score-list'
+import { SP500, SP500Sectors } from '../lib/SP500_scores.js'
+import { STOXX600, STOXX600Sectors } from '../lib/STOXX600_scores.js'
+import ScoreList from '../components/score-list'
 
 export async function getStaticProps() { //Using Static Site Generation for enhanced SEO
   // To Do: Serve json files here from Waves of Change server
