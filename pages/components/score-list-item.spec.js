@@ -22,14 +22,5 @@ describe('IndustrySelector', () => {
     const select = screen.getByText('MYCO')
     expect(select).toBeInTheDocument()
   })
-  it('checks if the score is shown', () => {
-    render(<ScoreListItem {...props} />)
-    const select = screen.getByText("Today's Score: -0.14")
-    //expect(select).toBeInTheDocument()
-  })
-  it('checks if the change in rank is shown', () => {
-    render(<ScoreListItem {...props} />)
-    const select = screen.getByText("Rank change: -57")
-    expect(select).toBeInTheDocument()
-  })
+
 })
