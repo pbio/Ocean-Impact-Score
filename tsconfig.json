@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/score-list-item.tsx"  ],
+, "src/components/score-list-item.tsx"  ],
   "exclude": [
     "node_modules"
   ]
