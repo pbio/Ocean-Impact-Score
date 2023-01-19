@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import { SP500, SP500Sectors } from './lib/SP500_scores.js'
-import { Stoxx600, STOXX600Sectors } from './lib/STOXX600_scores.js'
+import { STOXX600, STOXX600Sectors } from './lib/STOXX600_scores.js'
 import ScoreList from './components/score-list'
 
 export async function getStaticProps() { //Using Static Site Generation for enhanced SEO
@@ -27,7 +27,7 @@ export async function getStaticProps() { //Using Static Site Generation for enha
   // const SP500 = getData();
   return {
     props: {
-      SP500, SP500Sectors, Stoxx600, STOXX600Sectors
+      SP500, SP500Sectors, STOXX600, STOXX600Sectors
     },
   };
 }
@@ -60,7 +60,7 @@ export default function Home(props: AppProps) {
             <Button onClick={()=>setMarketType(false)}>EU600</Button>
           </Box>
           <ScoreList 
-            scoresList={ marketType ? SP500 : Stoxx600 } 
+            scoresList={ marketType ? SP500 : STOXX600 } 
             addInfo={ marketType ? SP500Sectors :  STOXX600Sectors } 
             {...pageProps} />
         </Container>
