@@ -3,9 +3,6 @@ import type { AppProps } from 'next/app'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -45,7 +42,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     const [industry, setIndustry] = React.useState("");
     const [sort, setSort] = React.useState<number>(1);
 
-    //Handle Sort Type
+    //Handle Sort Type array
     const hst: Array<[string, string, string, number]> = [
       ["daily", "2022-11-06", "2022-11-07",1],
       ["daily", "2022-11-06", "2022-11-07", -1],
@@ -85,7 +82,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                     label="sort"
                     onChange={event => setSort(Number(event.target.value))}
                     >
-                    <MenuItem 
+                    <MenuItem //To do: use map() for this
                         key={1} 
                         value={1}>
                       highest daily
@@ -140,18 +137,18 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
         <List>
           {
           scoresList
-          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]])
-          .map((element, index) => ({...element, rank:[hst[sort-1][3]*index]})) // add yesterday's rank
-          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][2]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][2]])
+          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]]) //To do: clean up this line to make it understandable
+          .map((element, index) => ({...element, rank:[hst[sort-1][3]*index]})) // add yesterday/last months/last years rank
+          .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][2]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][2]]) //To do: clean up this line to make it understandable
           .map((element, index) => { 
             element.rank[1]=hst[sort-1][3]*index;
-            return element })     //add today's rank
+            return element })     //add today's/this month/this year rank 
           .filter(element => addInfo[element.ticker]?.[0].includes(industry) ) //industry category filter
-          .filter((element)=>{ //search
+          .filter((element)=>{ //search term filter: name and ticker 
               return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
             }) 
-          .slice(0,50) //only show the top 50
-          .map(element=>
+          .slice(0,50) //only show the top 50 to avoid slowing down app
+          .map(element=> //map to output the JSX components
               <ScoreListItem 
                   key={element.ticker} 
                   data={element}
@@ -164,7 +161,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
           }
         </List>
       </nav>
-      <ScoreDialog 
+      <ScoreDialog // modal to show the data in graphs
           ticker={selectedCompany.ticker} 
           monthly={selectedCompany.monthly} 
           yearly={selectedCompany.yearly} 
