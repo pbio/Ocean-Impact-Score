@@ -2,7 +2,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor, fireEvent} from '@testing-library/react'
-import IndustrySelector from './industry-selector'
+import IndustrySelector from '../pages/components/industry-selector'
 
 const props = {selectedIndustry:"", setIndustry:jest.fn()}
 

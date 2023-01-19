@@ -22,8 +22,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/components/score-list-item.tsx"  ],
+    "**/*.tsx" 
+  ],
   "exclude": [
     "node_modules"
   ]
