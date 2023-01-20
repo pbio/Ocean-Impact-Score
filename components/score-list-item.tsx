@@ -66,7 +66,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
   };
   return (
     <ListItem>
-      <ListItemButton onClick={handleClickOpen} >
+      <ListItemButton onClick={handleClickOpen} sx={{borderRadius: '16px'}}>
       <Grid
           container
           direction="row"

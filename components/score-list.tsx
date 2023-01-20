@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -15,16 +16,12 @@ import styled from '@mui/system/styled';
 import ScoreDialog from './score-dialog';
 import ScoreListItem from './score-list-item';
 import IndustrySelector from './industry-selector'
+import TopXCutoffLine from './top-x-cutoff-line'
 
 interface CustomPageProps { 
   scoresList: Item[],
   addInfo: any
 }
-
-const Item = styled('div')(({ theme }) => ({
-  //padding: theme.spacing(1),
-  //textAlign: 'center'
-}));
 
 interface Item {
   ticker: string,
@@ -53,7 +50,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     ]
 
     return (
-    <Box sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', maxWidth: 700, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem >
@@ -64,16 +61,15 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
           justifyContent="space-between"
           alignItems="baseline"
         >
-          <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} item>
-            <Item>
+          <Grid md={4} xs={6} sx={{ p: 2 }} item>
             <IndustrySelector 
               selectedIndustry={industry}
               setIndustry={setIndustry} 
               {...pageProps} />
-            </Item>
+            
             </Grid>
-            <Grid md={4} xs={6} spacing={3} sx={{ p: 2 }} item>
-            <Item>
+            <Grid md={4} xs={6} sx={{ p: 2 }} item>
+            
             <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                 <Select
@@ -114,19 +110,18 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
                     </MenuItem>
                 </Select>
             </FormControl>
-            </Item>
+            
             </Grid>
-            <Grid 
-              md={4} xs={12} 
-              spacing={3} sx={{ p: 2 }} item>
-              <Item>
+            <Grid md={4} sm={12} sx={{ p: 2 }} item>
+              
               <TextField 
                 variant="outlined" 
                 label="Search" 
                 onChange={event => setSearch(event.target.value)} 
                 size="small" 
+                fullWidth
                 />
-                </Item>
+                
             </Grid>
           </Grid>
           </ListItem>
@@ -148,16 +143,21 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
               return element.ticker.toLowerCase().includes(searchTerm.toLowerCase()) || addInfo[element.ticker]?.[1]?.toLowerCase().includes(searchTerm.toLowerCase())
             }) 
           .slice(0,50) //only show the top 50 to avoid slowing down app
-          .map(element=> //map to output the JSX components
-              <ScoreListItem 
-                  key={element.ticker} 
+          .map((element, index )=>{ //map to output the JSX components
+              return (<>
+                <ScoreListItem 
+                  key={element.ticker}
                   data={element}
                   name={(addInfo[element.ticker]) ? addInfo[element.ticker][1] : element.ticker}
                   setOpen={setOpen} 
                   setCompany={setCompany}
                   sort={sort}
                   {...pageProps}
-                  />) 
+                  />
+                  {/* show the cutoff line */}
+                  {(index == 4 && searchTerm=="") && <TopXCutoffLine cutoffLimit={index+1} key={"top"+index} />} 
+                </>)
+            }) 
           }
         </List>
       </nav>
