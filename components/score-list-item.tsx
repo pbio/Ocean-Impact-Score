@@ -1,10 +1,13 @@
 import type { AppProps } from 'next/app'
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import Typography from '@mui/material/Typography';
-import { ArrowDownward, DragHandle, ArrowUpward } from '@mui/icons-material';
-import Tooltip from '@mui/material/Tooltip';
-import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import Typography from '@mui/material/Typography'
+import { ArrowDownward, DragHandle, ArrowUpward } from '@mui/icons-material'
+import Tooltip from '@mui/material/Tooltip'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import { useDispatch } from 'react-redux'
+import { addTicker } from './select-ticker-slice'
 
 //import getDate from "../lib/getDate.ts"
 interface Item {
@@ -27,6 +30,7 @@ interface CustomPageProps {
 
 export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps & CustomPageProps):JSX.Element {
   //const todayDate = getDate(); //when go live, need to implement the today date checker
+  const dispatch: any = useDispatch();
   const todayDate: string = "2022-11-07";
   const todayScore: number = data.daily[todayDate];
   const rankChangeMY: number  = data.rank?.[0] - data.rank?.[1]
@@ -44,6 +48,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
   const handleClickOpen = () => {
     setOpen(true);
     setCompany(data);
+    dispatch(addTicker(data))
   };
   const handleClose = () => {
       setOpen(false);
@@ -53,7 +58,7 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
     switch (sort) {
       case 1:
       case 2:
-        return "Today's Score: " + TodaysScore.toFixed(2)
+        return TodaysScore ? "Today's Score: " + TodaysScore.toFixed(2) : "No score available"
       case 3:
       case 4:
         return MonthsScore ? "This month's Score: " + MonthsScore.toFixed(2) : "No score available"
@@ -85,8 +90,8 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
           <Typography 
             variant="body1" >
               {createScoreContent(sort, todayScore, data.monthly["2022-11"], data.yearly["2022"])}
-            </Typography>
-            </Grid>
+          </Typography>
+        </Grid>
             <Grid md={4} sm={6} item>
             <Tooltip title="ranking +/- trend">
               <Typography 

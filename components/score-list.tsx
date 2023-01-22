@@ -162,10 +162,6 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
         </List>
       </nav>
       <ScoreDialog // modal to show the data in graphs
-          ticker={selectedCompany.ticker} 
-          monthly={selectedCompany.monthly} 
-          yearly={selectedCompany.yearly} 
-          daily={selectedCompany.daily}
           open={open} 
           setOpen={setOpen}
           {...pageProps} />

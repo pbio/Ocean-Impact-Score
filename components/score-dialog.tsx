@@ -12,6 +12,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import ScorePlot from './score-plot.js';
 import { setDatasets } from 'react-chartjs-2/dist/utils.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectTicker, removeTicker } from './select-ticker-slice'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -52,15 +54,13 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 interface CustomPageProps { 
-  ticker: String,
-  daily: Object,
-  monthly: Object,
-  yearly: Object,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   open: boolean
 }
 
-export default function CustomizedDialogs({ticker, monthly, yearly, daily, open, setOpen}: AppProps & CustomPageProps):JSX.Element {
+export default function CustomizedDialogs({ open, setOpen }: AppProps & CustomPageProps):JSX.Element {
+  const { ticker, daily, monthly, yearly } = useSelector(selectTicker);
+  const dispatch = useDispatch(); 
   const [plotType, setPlotType] = React.useState(0);
   const plotTypeTitle: Array<String> = ["Daily", "Monthly", "Yearly"]
   const setData = function(plotType: Number) {
@@ -70,7 +70,7 @@ export default function CustomizedDialogs({ticker, monthly, yearly, daily, open,
   }
   return (
       <BootstrapDialog
-        onClose={() => setOpen(false)}
+        onClose={() => {setOpen(false); dispatch(removeTicker())}}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
