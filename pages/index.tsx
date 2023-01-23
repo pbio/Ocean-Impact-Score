@@ -44,8 +44,8 @@ export default function Home(props: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container maxWidth="sm">
-          <Typography variant="h2" color="white">
+        <Container maxWidth="md" >
+          <Typography variant="h2" color="white" align="center">
             Ocean Impact Score
           </Typography>
           <Typography variant= "body1" color= "white" sx={{fontWeight: 'bold'}}>

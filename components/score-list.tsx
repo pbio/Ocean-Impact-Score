@@ -50,7 +50,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
     ]
 
     return (
-    <Box sx={{ width: '100%', maxWidth: 700, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem >
@@ -112,7 +112,7 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
             </FormControl>
             
             </Grid>
-            <Grid md={4} sm={12} sx={{ p: 2 }} item>
+            <Grid md={4} xs={12} sx={{ p: 2 }} item>
               
               <TextField 
                 variant="outlined" 
