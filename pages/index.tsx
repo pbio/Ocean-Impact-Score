@@ -10,21 +10,21 @@ import { SP500, SP500Sectors } from '../lib/SP500_scores.js'
 import { STOXX600, STOXX600Sectors } from '../lib/STOXX600_scores.js'
 import ScoreList from '../components/score-list'
 
-export async function getStaticProps() { //Using Static Site Generation for enhanced SEO
+export async function GetServerSideProps() { //Using Static Site Generation for enhanced SEO
   // To Do: Serve json files here from Waves of Change server
-  // server side is not set up yet!!
-  // const getData = async function(){
-  //   try { 
-  //     const newSP500Dataset = await fetch('my-json-server.typicode.com/pbio/WavesOfChangeData/blob/main/SP500.json')
-  //       .then(response=>response.json())
-  //       .then(json => json);
-  //     return newSP500Dataset;
-  //   } 
-  //   catch(error) {
-  //     console.error(error)
-  //   }
-  // }
-  // const SP500 = getData();
+  // API key : '44b6dedca1668563f8c75d7b2c08453f';
+  const getData = async function(){
+    try { 
+      const newSP500Dataset = await fetch('https://esg.cafe/api/v2/general-info/EU600?API_KEY=44b6dedca1668563f8c75d7b2c08453f')
+        .then(response=>response.json())
+        .then(json => {console.log(json)});
+      //return newSP500Dataset;
+    } 
+    catch(error) {
+      console.error(error)
+    }
+  }
+  getData();
   return {
     props: {
       SP500, SP500Sectors, STOXX600, STOXX600Sectors

@@ -130,6 +130,26 @@ export default function ScoreList({ scoresList, addInfo, pageProps }: AppProps &
       <Divider />
       <nav aria-label="secondary mailbox folders">
         <List>
+          <ListItem>
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="baseline"
+              >
+              <Grid sm={4} item>
+                Name
+              </Grid>
+              <Grid sm={4} item>
+                Score
+              </Grid>
+              <Grid sm={4} item>
+                Rank Change
+              </Grid>
+            </Grid>
+          </ListItem>
+
+
           {
           scoresList
           .sort((a: any, b: any) => hst[sort-1][3]*b[hst[sort-1][0]][hst[sort-1][1]]-hst[sort-1][3]*a[hst[sort-1][0]][hst[sort-1][1]]) //To do: clean up this line to make it understandable
