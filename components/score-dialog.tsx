@@ -68,6 +68,29 @@ export default function CustomizedDialogs({ open, setOpen }: AppProps & CustomPa
     else if (plotType==1) return monthly
     else return daily
   }
+
+      //async call to get data on specific company
+      React.useEffect(()=>{
+        const getData = async function() { //need to go through proxy
+            // const options = {
+            //     method: 'POST',
+            //     headers: {
+            //       'content-type': 'application/json',
+            //       Origin: 'localhost:3000',
+            //       'X-Requested-With': 'www.example.com',
+            //       'X-RapidAPI-Key': 'ca8f97584cmsh69c58e9a18bd1dcp12f73cjsn64e6335cc338',
+            //       'X-RapidAPI-Host': 'http-cors-proxy.p.rapidapi.com'
+            //     },
+            //     body: '{"url":"https://esg.cafe/api/v2/general-info/EU600?API_KEY=44b6dedca1668563f8c75d7b2c08453f&interval=1M&start=2018-11-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z"}'
+            //   };
+              
+            // const genInfo = await fetch('https://http-cors-proxy.p.rapidapi.com/', options)
+            // const genInfoJson = await genInfo.json();
+            // setInfo(genInfoJson);
+        }
+        getData();
+    }, []);
+
   return (
       <BootstrapDialog
         onClose={() => {setOpen(false); dispatch(removeTicker())}}

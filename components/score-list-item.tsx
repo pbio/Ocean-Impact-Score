@@ -9,41 +9,54 @@ import Button from '@mui/material/Button'
 import { useDispatch } from 'react-redux'
 import { addTicker } from './select-ticker-slice'
 
-//import getDate from "../lib/getDate.ts"
 interface Item {
   ticker: string,
   daily: any,
   monthly: any,
   yearly: any,
   ranking: {year: number, month: number, day: number},
-  rank:number[]
+  rank:number[],
+}
+interface Info {
+  Exchange: string,
+  ISIN: string,
+  Location: string,
+  Name: string,
+  RelatedCompanies: any,
+  Sector: string,
+  class: string,
+  currency: string,
+  market: string,
+  ticker: string,
 }
 
 interface CustomPageProps { 
-  data: Item,
+  data: any,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setCompany: React.Dispatch<React.SetStateAction<object>>,
-  name: string,
-  sort: number
+  info: Info,
+  sort: number,
 }
 
 
-export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppProps & CustomPageProps):JSX.Element {
+
+
+export default function ScoreItem ({data, setOpen, setCompany, info, sort}: CustomPageProps):JSX.Element {
   //const todayDate = getDate(); //when go live, need to implement the today date checker
   const dispatch: any = useDispatch();
   const todayDate: string = "2022-11-07";
-  const todayScore: number = data.daily[todayDate];
-  const rankChangeMY: number  = data.rank?.[0] - data.rank?.[1]
-  const setColor = function(rankChange: Number) {
-    if (rankChange > 0) return "green"
-    else if (rankChange < 0) return "red"
-    else return "white"
-  }
-  const setIcon = function(rankChange: Number) {
-    if (rankChange > 0) return <ArrowUpward color="success" />
-    else if (rankChange < 0) return <ArrowDownward color="error" />
-    else return <DragHandle />
-  }
+  const todayScore: number = data;
+  //const rankChangeMY: number  = data.rank?.[0] - data.rank?.[1]
+  // const setColor = function(rankChange: Number) {
+  //   if (rankChange > 0) return "green"
+  //   else if (rankChange < 0) return "red"
+  //   else return "white"
+  // }
+  // const setIcon = function(rankChange: Number) {
+  //   if (rankChange > 0) return <ArrowUpward color="success" />
+  //   else if (rankChange < 0) return <ArrowDownward color="error" />
+  //   else return <DragHandle />
+  // }
   //close the dialog
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,17 +67,17 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
       setOpen(false);
   };
   //Show the right score based on day/month/year view
-  const createScoreContent = function(sort: Number, TodaysScore: Number, MonthsScore: Number, YearsScore: Number){
+  const createScoreContent = function(sort: Number, TodaysScore: Number){
     switch (sort) {
       case 1:
       case 2:
         return TodaysScore ? "Today's Score: " + TodaysScore.toFixed(2) : "No score available"
       case 3:
       case 4:
-        return MonthsScore ? "This month's Score: " + MonthsScore.toFixed(2) : "No score available"
+        return TodaysScore ? "This month's Score: " + TodaysScore.toFixed(2) : "No score available"
       case 5:
       case 6:
-        return YearsScore ? "This year's Score: " + YearsScore.toFixed(2) : "No score available"
+        return TodaysScore ? "This year's Score: " + TodaysScore.toFixed(2) : "No score available"
       default:
         break;
     }
@@ -80,29 +93,19 @@ export default function ScoreItem ({data, setOpen, setCompany, name, sort}: AppP
         >
         <Grid md={4} sm={12} item>
           <Typography variant="h3" color="primary">
-            {data.ticker}
+            {info.ticker}
           </Typography>
           <Typography variant="body1" color="white">
-            {name}
+            {info.Name}
           </Typography>
         </Grid>
         <Grid md={4} sm={6} item>
           <Typography 
             variant="body1" >
-              {createScoreContent(sort, todayScore, data.monthly["2022-11"], data.yearly["2022"])}
+              {createScoreContent(sort, todayScore)}
           </Typography>
         </Grid>
             <Grid md={4} sm={6} item>
-            <Tooltip title="ranking +/- trend">
-              <Typography 
-                variant="body1" 
-                color={setColor(rankChangeMY)} 
-                display="flex" justifyContent="flex-end">
-                
-                {"Rank change: " + rankChangeMY}
-                { setIcon(rankChangeMY) }
-              </Typography>
-            </Tooltip>
         </Grid>
       </Grid>
       </ListItemButton>

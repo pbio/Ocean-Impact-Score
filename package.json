@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "start": "next start",
+    "start": "NODE_OPTIONS='--inspect' next start",
     "build": "next build",
     "test": "jest --watch"
   },
