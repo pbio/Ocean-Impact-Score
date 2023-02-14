@@ -88,7 +88,7 @@ export default function CustomizedDialogs({ open, setOpen }: AppProps & CustomPa
             // const genInfoJson = await genInfo.json();
             // setInfo(genInfoJson);
         //}
-        getData();
+        //getData();
     }, []);
 
   return (
