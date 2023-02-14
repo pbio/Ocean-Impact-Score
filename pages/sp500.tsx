@@ -6,8 +6,8 @@ export async function getServerSideProps() {
   // Using Server side Generation for enhanced SEO
   // Get json files here from Waves of Change (esg cafe) server
   // API key : '44b6dedca1668563f8c75d7b2c08453f';
-    const urls = ['https://esg.cafe/api/v2/time-series/esg-score/SP500?API_KEY=44b6dedca1668563f8c75d7b2c08453f&interval=1M&start=2022-12-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z&tickers=TSLA,GOOG',
-                  'https://esg.cafe/api/v2/general-info/SP500?API_KEY=44b6dedca1668563f8c75d7b2c08453f&tickers=TSLA,GOOG'];
+  const urls = [process.env.API_URL + 'time-series/esg-score/SP500?API_KEY=' + process.env.API_KEY + '&interval=1M&start=2022-12-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z&tickers=AMZN,GOOG',
+                process.env.API_URL + 'general-info/SP500?API_KEY=' + process.env.API_KEY + '&tickers=AMZN,GOOG'];
     const [ SP500Scores, SP500Info  ] = await Promise.all(urls.map(async (url:string) => {
                                             const response = await fetch(url);
                                             const data = await response.json();

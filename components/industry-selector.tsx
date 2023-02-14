@@ -1,5 +1,4 @@
 import * as React from 'react';
-import type { AppProps } from 'next/app'
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,40 +8,34 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface CustomPageProps { 
     selectedIndustry: string,
-    setIndustry: React.Dispatch<React.SetStateAction<string>>
+    setIndustry: React.Dispatch<React.SetStateAction<string>>,
+    industries: string[]
 }
 
 //export default function IndustrySelector({ selectedIndustry, setIndustry}: AppProps<CustomPageProps> ) {
-export default function IndustrySelector(props: AppProps & CustomPageProps ):JSX.Element {
-    const industryList: string[] = [
-        "", "Commercial Services", "Communications", "Consumer Durables", "Consumer Non-Durables", "Consumer Services", 
-        "Distribution Services", "Electronic Technology", "Energy Minerals", "Finance", "Health Services", "Health Technology", 
-        "Industrial Services", "Non-Energy Minerals", "Process Industries", "Producer Manufacturing", "Retail Trade", "Technology Services", 
-        "Transportation", "Utilities", "Real Estate"
-      ];
+export default function IndustrySelector({ industries, selectedIndustry, setIndustry }: CustomPageProps ):JSX.Element {
     return (
     <FormControl fullWidth size="small">
         <InputLabel id="select-industry">Industry</InputLabel>
          <Select
-            value={props.selectedIndustry}
+            value={selectedIndustry}
             label="industry"
             onChange={(event)=>{
-                props.setIndustry(event.target.value)
+                setIndustry(event.target.value)
             }}
             >
-            {industryList.map(function(element : string){
-                return element ? 
-                    <MenuItem 
+            {industries.map(function(element : string){
+                return <MenuItem 
                         key={element} 
                         value={element}>
                         {element}
-                    </MenuItem> :
-                    <MenuItem 
-                        key={element}
-                        value={element}>
-                        Show All Companies
-                    </MenuItem>
+                    </MenuItem> 
             })}
+            <MenuItem 
+                key={''}
+                value={''}>
+                Show All Companies
+            </MenuItem>
         </Select>
   </FormControl>);
 }
