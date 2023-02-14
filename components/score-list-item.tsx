@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import Typography from '@mui/material/Typography'
@@ -42,7 +43,8 @@ interface CustomPageProps {
 
 
 export default function ScoreItem ({data, setOpen, setCompany, info, sort}: CustomPageProps):JSX.Element {
-  //const todayDate = getDate(); //when go live, need to implement the today date checker
+  const router = useRouter();
+
   const dispatch: any = useDispatch();
   const todayDate: string = "2022-11-07";
   const todayScore: number = data;
@@ -59,6 +61,7 @@ export default function ScoreItem ({data, setOpen, setCompany, info, sort}: Cust
   // }
   //close the dialog
   const handleClickOpen = () => {
+    router.push('/plot/'+info.ticker);
     setOpen(true);
     setCompany(data);
     dispatch(addTicker(data))

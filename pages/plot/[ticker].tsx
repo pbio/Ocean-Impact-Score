@@ -7,7 +7,6 @@ export async function getServerSideProps(context:any) {
     const url = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=1M&start=2022-12-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z&tickers='+ticker;
     const response = await fetch(url);
     const responseJson = await response.json();
-    
     return {
             props: { 
                 data: responseJson
