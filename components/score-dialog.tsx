@@ -71,7 +71,7 @@ export default function CustomizedDialogs({ open, setOpen }: AppProps & CustomPa
 
       //async call to get data on specific company
       React.useEffect(()=>{
-        const getData = async function() { //need to go through proxy
+        //const getData = async function() { //need to go through proxy
             // const options = {
             //     method: 'POST',
             //     headers: {
@@ -87,7 +87,7 @@ export default function CustomizedDialogs({ open, setOpen }: AppProps & CustomPa
             // const genInfo = await fetch('https://http-cors-proxy.p.rapidapi.com/', options)
             // const genInfoJson = await genInfo.json();
             // setInfo(genInfoJson);
-        }
+        //}
         getData();
     }, []);
 
