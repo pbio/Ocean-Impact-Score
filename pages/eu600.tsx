@@ -6,18 +6,19 @@ export async function getServerSideProps() {
   // Using Server side Generation for enhanced SEO, while getting latest stock information.
   
   // Get Dates
-  const todaysDate:string = getDate() +'T00:00:00Z';
-  const yesterdaysDate:string = getYesterdaysDate();
-  const lastMonthsDate:string = getlastMonthsDate();
-  const lastYearsDate:string = getlastyearsDate();
+  const todaysDate:string = getDate() +'T00:00:00.000Z';
+  const yesterdaysDate:string = getYesterdaysDate() +'T00:00:00.000Z';
+  const lastMonthsDate:string = getlastMonthsDate() +'T00:00:00.000Z';
+  const lastYearsDate:string = getlastyearsDate() +'T00:00:00.000Z';
 
   // Generate Urls
-  const tickers = '&tickers=BMW,NESN'; //'' for prod
+  //const tickers = '&tickers=BMW,NESN'; //testing only
+  const tickers = ''; //for prod
   const baseUrl:string = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=';
 
-  const yearlyUrl:string = baseUrl + '1M&start=' + lastYearsDate + 'T10:50:35.819Z&finish='+ todaysDate + tickers;
-  const monthlyUrl:string = baseUrl + '1D&start=' + lastMonthsDate + 'T10:50:35.819Z&finish='+ todaysDate + tickers;
-  const dailyUrl:string = baseUrl + '1D&start='+ yesterdaysDate + 'T10:50:35.819Z&finish='+ todaysDate + tickers;
+  const yearlyUrl:string = baseUrl + '1M&start=' + lastYearsDate + '&finish='+ todaysDate + tickers;
+  const monthlyUrl:string = baseUrl + '1D&start=' + lastMonthsDate + '&finish='+ todaysDate + tickers;
+  const dailyUrl:string = baseUrl + '1D&start='+ yesterdaysDate + '&finish='+ todaysDate + tickers;
 
   const infoUrl:string = process.env.API_URL + 'general-info/EU600?API_KEY=' + process.env.API_KEY + tickers;
   const urls:string[] = [ yearlyUrl, monthlyUrl, dailyUrl, infoUrl ];

@@ -46,7 +46,6 @@ export default function ScorePlot({scores, ticker}: any) {
       }],
     };
 
-    console.log(data);
     return <div>
       <Line
         data={data}
