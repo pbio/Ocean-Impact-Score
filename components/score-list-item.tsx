@@ -29,10 +29,12 @@ interface Info {
   currency: string,
   market: string,
   ticker: string,
+  dailyScores: [string, number][],
+  monthlyScores: [string, number][],
+  yearlyScores: [string, number][],
 }
 
 interface CustomPageProps { 
-  data: any,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setCompany: React.Dispatch<React.SetStateAction<object>>,
   info: Info,
@@ -42,12 +44,10 @@ interface CustomPageProps {
 
 
 
-export default function ScoreItem ({data, setOpen, setCompany, info, sort}: CustomPageProps):JSX.Element {
+export default function ScoreItem ({setOpen, setCompany, info, sort}: CustomPageProps):JSX.Element {
   const router = useRouter();
-
   const dispatch: any = useDispatch();
-  const todayDate: string = "2022-11-07";
-  const todayScore: number = data;
+
   //const rankChangeMY: number  = data.rank?.[0] - data.rank?.[1]
   // const setColor = function(rankChange: Number) {
   //   if (rankChange > 0) return "green"
@@ -63,24 +63,24 @@ export default function ScoreItem ({data, setOpen, setCompany, info, sort}: Cust
   const handleClickOpen = () => {
     router.push('/plot/'+info.ticker);
     setOpen(true);
-    setCompany(data);
-    dispatch(addTicker(data))
+    //setCompany(data);
+    //dispatch(addTicker(data))
   };
   const handleClose = () => {
       setOpen(false);
   };
   //Show the right score based on day/month/year view
-  const createScoreContent = function(sort: Number, TodaysScore: Number){
+  const createScoreContent = function(sort: number, info: any){
     switch (sort) {
       case 1:
       case 2:
-        return TodaysScore ? "Today's Score: " + TodaysScore.toFixed(2) : "No score available"
+        return info.dailyScores[0][1] ? "Today's Score: " + info.dailyScores[0][1].toFixed(2) : "No score available"
       case 3:
       case 4:
-        return TodaysScore ? "This month's Score: " + TodaysScore.toFixed(2) : "No score available"
+        return info.monthlyScores[0][1] ? "This month's Score: " + info.monthlyScores[0][1].toFixed(2) : "No score available"
       case 5:
       case 6:
-        return TodaysScore ? "This year's Score: " + TodaysScore.toFixed(2) : "No score available"
+        return info.yearlyScores[0][1] ? "This year's Score: " + info.yearlyScores[0][1].toFixed(2) : "No score available"
       default:
         break;
     }
@@ -105,7 +105,7 @@ export default function ScoreItem ({data, setOpen, setCompany, info, sort}: Cust
         <Grid md={4} sm={6} item>
           <Typography 
             variant="body1" >
-              {createScoreContent(sort, todayScore)}
+              {createScoreContent(sort, info)}
           </Typography>
         </Grid>
             <Grid md={4} sm={6} item>

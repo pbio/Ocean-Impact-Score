@@ -13,12 +13,15 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
     
-    
+interface PlotData {
+  labels: string[],
+  datasets: any[],
+}   
 
 
-export default ({scores, ticker}: any) => {
+export default function ScorePlot({scores, ticker}: any) {
    
-    const data = {
+    const data:PlotData = {
       labels: scores.map( (score:any) => score.t.slice(0, -9) ),
       datasets: [{
         label: ticker +' score by Ocean Index',

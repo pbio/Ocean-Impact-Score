@@ -12,7 +12,7 @@ import ScoreListItem from './score-list-item';
 import getDate from '../lib/getDate';
 import IndustrySelector from './industry-selector';
 
-export default function ScoreList({ Info, Scores }:any ) {
+export default function ScoreList({ Info }:any ) {
     //state
     const [ dateKey, setDateKey ] = React.useState<string>();
     const [open, setOpen] = React.useState<boolean>(false);
@@ -25,14 +25,14 @@ export default function ScoreList({ Info, Scores }:any ) {
     const todayDateStrYMD = getDate();
 
     //create date key when we receive Scores
-    React.useEffect(()=>{
-        setDateKey(Object.keys(Scores)
-                            .find((key) =>{ 
-                                return key.includes(todayDateStrYMD.slice(0,-3))
-                            }));  
-    }, [Scores]); 
+    // React.useEffect(()=>{
+    //     setDateKey(Object.keys(Scores)
+    //                         .find((key) =>{ 
+    //                             return key.includes(todayDateStrYMD.slice(0,-3))
+    //                         }));  
+    // }, [Scores]); 
 
-    if (Array.isArray(Info) && dateKey)
+    if (Array.isArray(Info))
         return (<Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     <List>
                         <ListItem >
@@ -66,8 +66,8 @@ export default function ScoreList({ Info, Scores }:any ) {
                                         {['highest daily', 'lowest daily','highest monthly', 'lowest monthly', 'highest yearly', 'lowest yearly']
                                             .map((sortLabel:string, sortIdx:number) =>
                                                 <MenuItem 
-                                                    key={sortIdx} 
-                                                    value={sortIdx}>
+                                                    key={sortIdx+1} 
+                                                    value={sortIdx+1}>
                                                         {sortLabel}
                                                 </MenuItem>)
                                         }
@@ -90,9 +90,15 @@ export default function ScoreList({ Info, Scores }:any ) {
                     </List>
                  { Info                         //All tickers
                     .sort((a:any, b:any) => {   //sort tickers
-                            if (sort === 3) return (Scores[dateKey][b.ticker].Tone - Scores[dateKey][a.ticker].Tone);
-                            else if (sort === 4) return (Scores[dateKey][a.ticker].Tone - Scores[dateKey][b.ticker].Tone);
-                            else return (Scores[dateKey][a.ticker].Tone - Scores[dateKey][b.ticker].Tone);
+                            switch (sort) {
+                                case 1: return b.dailyScores[0][1] - a.dailyScores[0][1];
+                                case 2: return a.dailyScores[0][1] - b.dailyScores[0][1];
+                                case 3: return b.monthlyScores[0][1] - a.monthlyScores[0][1];
+                                case 4: return a.monthlyScores[0][1] - b.monthlyScores[0][1];
+                                case 5: return b.yearlyScores[0][1] - a.yearlyScores[0][1];
+                                case 6: return a.yearlyScores[0][1] - b.yearlyScores[0][1];
+                            } 
+                            return 0;
                         }) 
                     .filter(company => {           //industry category filter
                             return company.Sector.includes(industry); 
@@ -102,9 +108,25 @@ export default function ScoreList({ Info, Scores }:any ) {
                         }) 
                     .slice(0, 40)               // only show top 40
                     .map( (company:any) => {    // show on display
+                        let score:number;
+                        switch (sort) {
+                            case 1:
+                            case 2: 
+                                score=company.dailyScores[0][1]
+                                break;
+                            case 3:
+                            case 4:
+                                score=company.monthlyScores[0][1]
+                                break;
+                            case 5:
+                            case 6:
+                                score=company.yearlyScores[0][1]
+                                break;
+                            default:
+                                score=-10000;
+                        }
                         return <ScoreListItem 
                                     key={ company.ticker }
-                                    data={Scores[dateKey]?.[company.ticker].Tone}
                                     info={company}
                                     setOpen={setOpen} 
                                     setCompany={setCompany} 

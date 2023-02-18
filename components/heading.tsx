@@ -11,7 +11,7 @@ export default function Heading({ todayDateStrYMD }:{ todayDateStrYMD: string })
             An interface for viewing the Ocean Impact Score by Waves of Change
         </Typography>
         <Typography variant= "body1" color= "white" sx={{ fontStyle: 'italic' }}> 
-            Each public company in the SP500/STOXX600 is given an ocean impact score coming from our deep learning models trained on academic papers and reliable articles pertaining to the company's environmental and specifically 'Ocean' impact. 
+            Each public company in the SP500/STOXX600 is given an ocean impact score coming from our deep learning models trained on academic papers and reliable articles pertaining to the company&rsquo;s environmental and specifically &rsquo;Ocean&rsquo; impact. 
             <br></br>Future versions of this tool will update all scores in real time. 
         </Typography>
         <Typography variant= "body1" >{ `Latest Data Dump: ${todayDateStrYMD}` }</Typography>
