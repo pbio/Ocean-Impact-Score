@@ -12,10 +12,10 @@ export async function getServerSideProps(context:any) {
     const todaysDate:string = getDate() + 'T00:00:00.000Z';
     const lastMonthsDate:string = getlastMonthsDate() + 'T00:00:00.000Z';
     const lastYearsDate:string = getlastyearsDate() + 'T00:00:00.000Z';
-    const { ticker } = context.query;
-    const url30Days = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1D&start=' + lastMonthsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
-    const url1Year = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1M&start=' + lastYearsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
-    const url5Years = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1M&start=2016-01-05T10:50:35.819Z&finish=' + todaysDate + '&tickers='+ ticker;
+    const { ticker, market } = context.query;
+    const url30Days = API_URL + 'time-series/esg-score/' + market + '?API_KEY=' + API_KEY + '&interval=1D&start=' + lastMonthsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
+    const url1Year = API_URL + 'time-series/esg-score/' + market + '?API_KEY=' + API_KEY + '&interval=1M&start=' + lastYearsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
+    const url5Years = API_URL + 'time-series/esg-score/' + market + '?API_KEY=' + API_KEY + '&interval=1M&start=2016-01-05T10:50:35.819Z&finish=' + todaysDate + '&tickers='+ ticker;
     const urlArray = [ url30Days, url1Year, url5Years ];
     const data = await Promise.all(urlArray.map(async (url:string) => {
         const response = await fetch(url);
@@ -32,7 +32,7 @@ export async function getServerSideProps(context:any) {
 
 export default function Plot({data}:{data:any}) {
     const router = useRouter();
-    let { ticker } = router.query;
+    let { ticker, market } = router.query;
     let tickerStr: string;
     if (Array.isArray(ticker)) tickerStr = ticker[0];
     else if (typeof ticker === 'string') tickerStr = ticker;

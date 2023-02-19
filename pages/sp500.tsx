@@ -17,7 +17,7 @@ export async function getServerSideProps() {
   const lastYearsDate: string = getlastyearsDate() + "T00:00:00.000Z";
 
   // Generate Urls
-  //const tickers = '&tickers=TSLA,GOOG,NVDA'; //testing only
+  // const tickers = '&tickers=TSLA,GOOG,NVDA'; //testing only
   const tickers = ""; //for prod
   const baseUrl: string =
     API_URL + "time-series/esg-score/US500?API_KEY=" + API_KEY + "&interval=";
@@ -96,6 +96,5 @@ export default function Home({
     companyScores.yearlyScores = [[todaysDate + "T00:00:00", yearScore]];
     return companyScores;
   });
-  //console.log(organisedScoreData);
   return <ScoreList Info={organisedScoreData} />;
 }

@@ -96,6 +96,5 @@ export default function Home({
     companyScores.yearlyScores = [[todaysDate + "T00:00:00", yearScore]];
     return companyScores;
   });
-  //console.log(organisedScoreData);
   return <ScoreList Info={organisedScoreData} />;
 }
