@@ -5,10 +5,11 @@ import ScoreList from '../components/score-list';
 export async function getServerSideProps() { 
   // Using Server side Generation for enhanced SEO
   // Get json files here from Waves of Change (esg cafe) server
+
   const API_URL = 'https://esg.cafe/api/v2/'; //need to find better solution
   const API_KEY = '44b6dedca1668563f8c75d7b2c08453f'; //need to find better solution
-  const urls = [API_URL + 'time-series/esg-score/SP500?API_KEY=' + API_KEY + '&interval=1M&start=2022-12-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z&tickers=AMZN,GOOG',
-                API_URL + 'general-info/SP500?API_KEY=' + API_KEY + '&tickers=AMZN,GOOG'];
+  const urls = [API_URL + 'time-series/esg-score/US500?API_KEY=' + API_KEY + '&interval=1M&start=2022-12-05T10:50:35.819Z&finish=2023-02-05T10:50:35.819Z&tickers=AMZN,GOOG',
+                API_URL + 'general-info/US500?API_KEY=' + API_KEY + '&tickers=AMZN,GOOG'];
     const [ SP500Scores, SP500Info  ] = await Promise.all(urls.map(async (url:string) => {
                                             const response = await fetch(url);
                                             const data = await response.json();
