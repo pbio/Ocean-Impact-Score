@@ -4,7 +4,8 @@ import getDate, { getYesterdaysDate, getlastMonthsDate, getlastyearsDate } from 
 
 export async function getServerSideProps() { 
   // Using Server side Generation for enhanced SEO, while getting latest stock information.
-  
+  const API_URL = 'https://esg.cafe/api/v2/'; //need to find better solution
+  const API_KEY = '44b6dedca1668563f8c75d7b2c08453f'; //need to find better solution
   // Get Dates
   const todaysDate:string = getDate() +'T00:00:00.000Z';
   const yesterdaysDate:string = getYesterdaysDate() +'T00:00:00.000Z';
@@ -14,13 +15,13 @@ export async function getServerSideProps() {
   // Generate Urls
   //const tickers = '&tickers=BMW,NESN'; //testing only
   const tickers = ''; //for prod
-  const baseUrl:string = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=';
+  const baseUrl:string = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=';
 
   const yearlyUrl:string = baseUrl + '1M&start=' + lastYearsDate + '&finish='+ todaysDate + tickers;
   const monthlyUrl:string = baseUrl + '1D&start=' + lastMonthsDate + '&finish='+ todaysDate + tickers;
   const dailyUrl:string = baseUrl + '1D&start='+ yesterdaysDate + '&finish='+ todaysDate + tickers;
 
-  const infoUrl:string = process.env.API_URL + 'general-info/EU600?API_KEY=' + process.env.API_KEY + tickers;
+  const infoUrl:string = API_URL + 'general-info/EU600?API_KEY=' + API_KEY + tickers;
   const urls:string[] = [ yearlyUrl, monthlyUrl, dailyUrl, infoUrl ];
   // Get json here from Waves of Change (esg cafe) server. 
   const [ yearlyScores, monthlyScores, dailyScores, EU600Info  ] = await Promise.all(urls.map(async (url:string) => {

@@ -7,13 +7,15 @@ import {
 import getDate, { getYesterdaysDate, getlastMonthsDate, getlastyearsDate } from '../../lib/getDate';
 
 export async function getServerSideProps(context:any) {
+    const API_URL = 'https://esg.cafe/api/v2/'; //need to find better solution
+    const API_KEY = '44b6dedca1668563f8c75d7b2c08453f'; //need to find better solution
     const todaysDate:string = getDate() + 'T00:00:00.000Z';
     const lastMonthsDate:string = getlastMonthsDate() + 'T00:00:00.000Z';
     const lastYearsDate:string = getlastyearsDate() + 'T00:00:00.000Z';
     const { ticker } = context.query;
-    const url30Days = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=1D&start=' + lastMonthsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
-    const url1Year = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=1M&start=' + lastYearsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
-    const url5Years = process.env.API_URL + 'time-series/esg-score/EU600?API_KEY=' + process.env.API_KEY + '&interval=1M&start=2016-01-05T10:50:35.819Z&finish=' + todaysDate + '&tickers='+ ticker;
+    const url30Days = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1D&start=' + lastMonthsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
+    const url1Year = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1M&start=' + lastYearsDate + '&finish=' + todaysDate + '&tickers='+ ticker;
+    const url5Years = API_URL + 'time-series/esg-score/EU600?API_KEY=' + API_KEY + '&interval=1M&start=2016-01-05T10:50:35.819Z&finish=' + todaysDate + '&tickers='+ ticker;
     const urlArray = [ url30Days, url1Year, url5Years ];
     const data = await Promise.all(urlArray.map(async (url:string) => {
         const response = await fetch(url);
