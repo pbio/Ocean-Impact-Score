@@ -89,6 +89,7 @@ export default function ScoreList({ Info }:any ) {
                         </ListItem>
                     </List>
                  { Info                         //All tickers
+                    .slice()                    //make copy before sorting
                     .sort((a:any, b:any) => {   //sort tickers
                             switch (sort) {
                                 case 1: return b.dailyScores[0][1] - a.dailyScores[0][1];
@@ -108,23 +109,6 @@ export default function ScoreList({ Info }:any ) {
                         }) 
                     .slice(0, 40)               // only show top 40
                     .map( (company:any) => {    // show on display
-                        let score:number;
-                        switch (sort) {
-                            case 1:
-                            case 2: 
-                                score=company.dailyScores[0][1]
-                                break;
-                            case 3:
-                            case 4:
-                                score=company.monthlyScores[0][1]
-                                break;
-                            case 5:
-                            case 6:
-                                score=company.yearlyScores[0][1]
-                                break;
-                            default:
-                                score=-10000;
-                        }
                         return <ScoreListItem 
                                     key={ company.ticker }
                                     info={company}
