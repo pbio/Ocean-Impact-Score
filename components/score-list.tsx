@@ -82,21 +82,21 @@ export default function ScoreList({ Info }:any ) {
                         </ListItem>
                     </List>
                  { Info                         //All tickers
-                    .slice()                    //make copy before sorting
-                    .sort((a:any, b:any) => {   //sort based on yesterday/lastmonth/year score for ranking
-                        switch (sort) {
-                            case 1: return b.dailyScores[1][1] - a.dailyScores[1][1];
-                            case 2: return a.dailyScores[1][1] - b.dailyScores[1][1];
-                            case 3: return b.monthlyScores[1][1] - a.monthlyScores[1][1];
-                            case 4: return a.monthlyScores[1][1] - b.monthlyScores[1][1];
-                            case 5: return b.yearlyScores[0][1] - a.yearlyScores[0][1];
-                            case 6: return a.yearlyScores[0][1] - b.yearlyScores[0][1];
-                        } 
-                        return 0;
-                    }) 
-                    .map((element, index) => { // add yesterday/last months/last years rank
-                        return ({...element, rank:[directionOfRanking * index]})
-                    }) 
+                    // .sort((a:any, b:any) => {   //sort based on yesterday/lastmonth/year score for ranking
+                    //     switch (sort) {
+                    //         case 1: return b.dailyScores[1][1] - a.dailyScores[1][1];
+                    //         case 2: return a.dailyScores[1][1] - b.dailyScores[1][1];
+                    //         case 3: return b.monthlyScores[1][1] - a.monthlyScores[1][1];
+                    //         case 4: return a.monthlyScores[1][1] - b.monthlyScores[1][1];
+                    //         case 5: return b.yearlyScores[0][1] - a.yearlyScores[0][1];
+                    //         case 6: return a.yearlyScores[0][1] - b.yearlyScores[0][1];
+                    //     } 
+                    //     return 0;
+                    // }) 
+                    // .map((element, index) => { // add yesterday/last months/last years rank
+                    //     element.rank = [directionOfRanking * index];
+                    //     return element;
+                    // }) 
                     .sort((a:any, b:any) => {   //sort tickers based on latest score
                             switch (sort) {
                                 case 1: return b.dailyScores[0][1] - a.dailyScores[0][1];
@@ -108,9 +108,9 @@ export default function ScoreList({ Info }:any ) {
                             } 
                             return 0;
                         }) 
-                    .map((element, index) => { 
-                            element.rank[1]= directionOfRanking * index;
-                            return element })     //add today's/this month/this year rank 
+                    // .map((element, index) => { 
+                    //         element.rank[1]= directionOfRanking * index;
+                    //         return element; })     //add today's/this month/this year rank 
                     .filter(company => {           //industry category filter
                             return company.Sector.includes(industry); 
                         }) 

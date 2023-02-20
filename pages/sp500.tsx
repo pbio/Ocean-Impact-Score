@@ -41,7 +41,7 @@ export async function getServerSideProps() {
   //parse data into large array of each company
   const organisedScoreData: any = EU600Info.map((company:any) => {
     const ticker = company.ticker;
-    const companyScores: any = { ...company };
+    const companyScores: any = company;
     //save day scores
     companyScores.dailyScores = [
       [
