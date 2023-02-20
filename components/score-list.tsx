@@ -23,14 +23,7 @@ export default function ScoreList({ Info }:any ) {
 
     //get date
     const todayDateStrYMD = getDate();
-    const directionOfRanking = (sort === 1 || sort === 3 || sort === 5)? 1: -1;
-    //create date key when we receive Scores
-    // React.useEffect(()=>{
-    //     setDateKey(Object.keys(Scores)
-    //                         .find((key) =>{ 
-    //                             return key.includes(todayDateStrYMD.slice(0,-3))
-    //                         }));  
-    // }, [Scores]); 
+    const directionOfRanking = (sort === 1 || sort === 3 || sort === 5)? 1: -1; 
 
     if (Array.isArray(Info))
         return (<Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -63,7 +56,7 @@ export default function ScoreList({ Info }:any ) {
                                         value={sort}
                                         label="sort"
                                         onChange={event => setSort(Number(event.target.value))} >
-                                        {['highest daily', 'lowest daily','highest monthly', 'lowest monthly', 'highest yearly', 'lowest yearly']
+                                        {['highest daily', 'lowest daily','highest monthly', 'lowest monthly']
                                             .map((sortLabel:string, sortIdx:number) =>
                                                 <MenuItem 
                                                     key={sortIdx+1} 

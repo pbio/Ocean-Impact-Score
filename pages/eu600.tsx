@@ -15,15 +15,14 @@ export async function getServerSideProps() {
   const yesterdaysDate: string = getYesterdaysDate() + "T00:00:00.000Z";
   const lastMonthsDate: string = getlastMonthsDate() + "T00:00:00.000Z";
   const lastYearsDate: string = getlastyearsDate() + "T00:00:00.000Z";
-
   // Generate Urls
-  const tickers = '&tickers=BMW,NESN'; //testing only
-  //const tickers = ""; //for prod
+  //const tickers = '&tickers=TSLA,GOOG,NVDA'; //testing only
+  const tickers = ""; //for prod
   const baseUrl: string =
     API_URL + "time-series/esg-score/EU600?API_KEY=" + API_KEY + "&interval=";
 
   const yearlyUrl: string =
-    baseUrl + "1M&start=" + lastYearsDate + "&finish=" + todaysDate + tickers;
+    baseUrl + "1M&start=" + lastMonthsDate + "&finish=" + todaysDate + tickers;
   //const monthlyUrl:string = baseUrl + '1D&start=' + lastMonthsDate + '&finish='+ todaysDate + tickers;
   const dailyUrl: string =
     baseUrl + "1D&start=" + yesterdaysDate + "&finish=" + todaysDate + tickers;
@@ -39,37 +38,19 @@ export async function getServerSideProps() {
       return data;
     })
   );
-
-  return {
-    props: { Info: EU600Info, dailyScores, yearlyScores },
-  };
-}
-
-export default function Home({
-  Info,
-  yearlyScores,
-  dailyScores,
-}: {
-  Info: any[];
-  dailyScores: any;
-  yearlyScores: any;
-}) {
-  const todaysDate: string = getDate();
-  const yesterdaysDate: string = getYesterdaysDate();
-  const lastMonthsDate: string = getlastMonthsDate();
-  //save all daily/monthly/yearly single scores
-  const organisedScoreData: any = Info.map((company) => {
+  //parse data into large array of each company
+  const organisedScoreData: any = EU600Info.map((company:any) => {
     const ticker = company.ticker;
     const companyScores: any = { ...company };
     //save day scores
     companyScores.dailyScores = [
       [
-        todaysDate + "T00:00:00",
-        dailyScores[todaysDate + "T00:00:00"][ticker]?.Tone,
+        todaysDate,
+        dailyScores[todaysDate.slice(0, -5)][ticker]?.Tone,
       ],
       [
-        yesterdaysDate + "T00:00:00",
-        dailyScores[yesterdaysDate + "T00:00:00"][ticker]?.Tone,
+        yesterdaysDate,
+        dailyScores[yesterdaysDate.slice(0, -5)][ticker]?.Tone,
       ],
     ];
     //save month scores
@@ -85,16 +66,25 @@ export default function Home({
         [thisMonthKey, yearlyScores[thisMonthKey][ticker]?.Tone],
         [lastMonthKey, yearlyScores[lastMonthKey][ticker]?.Tone],
       ];
-    //const monthScore = monthDateKeys.reduce((total, dateIdx) =>{ return total + monthlyScores[dateIdx][company.ticker]?.Tone }, 0) / monthDateKeys.length; //better, but too expensive
-    //companyScores.monthlyScores = [[todaysDate+'T00:00:00', monthScore]];
-    //calc/save yearly scores
-    const yearDateKeys = Object.keys(yearlyScores);
-    const yearScore =
-      yearDateKeys.reduce((total, dateIdx) => {
-        return total + yearlyScores[dateIdx][company.ticker]?.Tone;
-      }, 0) / yearDateKeys.length;
-    companyScores.yearlyScores = [[todaysDate + "T00:00:00", yearScore]];
+    //calc/save yearly scores; too expensive so it times out
+    // const yearDateKeys = Object.keys(yearlyScores);
+    // const yearScore =
+    //   yearDateKeys.reduce((total, dateIdx) => {
+    //     return total + yearlyScores[dateIdx][company.ticker]?.Tone;
+    //   }, 0) / yearDateKeys.length;
+    // companyScores.yearlyScores = [[todaysDate, yearScore]];
     return companyScores;
   });
-  return <ScoreList Info={organisedScoreData} />;
+
+  return {
+    props: { Info: organisedScoreData },
+  };
+}
+
+export default function Home({
+  Info,
+}: {
+  Info: any[];
+}) {
+  return <ScoreList Info={Info} />;
 }

@@ -22,7 +22,7 @@ export async function getServerSideProps() {
     API_URL + "time-series/esg-score/US500?API_KEY=" + API_KEY + "&interval=";
 
   const yearlyUrl: string =
-    baseUrl + "1M&start=" + lastYearsDate + "&finish=" + todaysDate + tickers;
+    baseUrl + "1M&start=" + lastMonthsDate + "&finish=" + todaysDate + tickers;
   //const monthlyUrl:string = baseUrl + '1D&start=' + lastMonthsDate + '&finish='+ todaysDate + tickers;
   const dailyUrl: string =
     baseUrl + "1D&start=" + yesterdaysDate + "&finish=" + todaysDate + tickers;
@@ -67,12 +67,12 @@ export async function getServerSideProps() {
         [lastMonthKey, yearlyScores[lastMonthKey][ticker]?.Tone],
       ];
     //calc/save yearly scores
-    const yearDateKeys = Object.keys(yearlyScores);
-    const yearScore =
-      yearDateKeys.reduce((total, dateIdx) => {
-        return total + yearlyScores[dateIdx][company.ticker]?.Tone;
-      }, 0) / yearDateKeys.length;
-    companyScores.yearlyScores = [[todaysDate, yearScore]];
+    // const yearDateKeys = Object.keys(yearlyScores);
+    // const yearScore =
+    //   yearDateKeys.reduce((total, dateIdx) => {
+    //     return total + yearlyScores[dateIdx][company.ticker]?.Tone;
+    //   }, 0) / yearDateKeys.length;
+    // companyScores.yearlyScores = [[todaysDate, yearScore]];
     return companyScores;
   });
 
