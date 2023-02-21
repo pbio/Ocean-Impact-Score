@@ -56,8 +56,7 @@ export default function Home({ Info, monthlyScores, yearlyScores, dailyScores}:{
     companyScores.yearlyScores = [[todaysDate+'T00:00:00', yearScore]];
     return companyScores;
   })
-  console.log(organisedScoreData);
-  //return (<div>testing in progress</div>)
+
   return (
            <ScoreList 
               Info= { organisedScoreData }  /> 
