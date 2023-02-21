@@ -16,8 +16,8 @@ export async function getServerSideProps() {
   const lastMonthsDate: string = getlastMonthsDate() + "T00:00:00.000Z";
   const lastYearsDate: string = getlastyearsDate() + "T00:00:00.000Z";
   // Generate Urls
-  const tickers = '&tickers=BMW,AC'; //testing only
-  //const tickers = ""; //for prod
+  //const tickers = '&tickers=BMW,AC'; //testing only
+  const tickers = ""; //for prod
   const baseUrl: string =
     API_URL + "time-series/esg-score/EU600?API_KEY=" + API_KEY + "&interval=";
 
