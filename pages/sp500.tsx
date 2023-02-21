@@ -3,7 +3,6 @@ import ScoreList from "../components/score-list";
 import getDate, {
   getYesterdaysDate,
   getlastMonthsDate,
-  getlastyearsDate,
 } from "../lib/getDate";
 
 export async function getServerSideProps() {
@@ -14,7 +13,6 @@ export async function getServerSideProps() {
   const todaysDate: string = getDate() + "T00:00:00.000Z";
   const yesterdaysDate: string = getYesterdaysDate() + "T00:00:00.000Z";
   const lastMonthsDate: string = getlastMonthsDate() + "T00:00:00.000Z";
-  const lastYearsDate: string = getlastyearsDate() + "T00:00:00.000Z";
   // Generate Urls
   const tickers = '&tickers=TSLA,GOOG,NVDA'; //testing only
   //const tickers = ""; //for prod

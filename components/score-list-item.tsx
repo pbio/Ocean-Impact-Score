@@ -40,6 +40,7 @@ interface CustomPageProps {
   setCompany: React.Dispatch<React.SetStateAction<object>>;
   info: Info;
   sort: number;
+
 }
 
 export default function ScoreItem({
@@ -51,17 +52,17 @@ export default function ScoreItem({
   const router = useRouter();
   const dispatch: any = useDispatch();
 
-  const rankChangeMY: number  = info.rank?.[0] - info.rank?.[1]
-  const setColor = function(rankChange: Number) {
-    if (rankChange > 0) return "green"
-    else if (rankChange < 0) return "red"
-    else return "white"
-  }
-  const setIcon = function(rankChange: Number) {
-    if (rankChange > 0) return <ArrowUpward color="success" />
-    else if (rankChange < 0) return <ArrowDownward color="error" />
-    else return <DragHandle />
-  }
+  // const rankChangeMY: number  = info.rank?.[0] - info.rank?.[1]
+  // const setColor = function(rankChange: Number) {
+  //   if (rankChange > 0) return "green"
+  //   else if (rankChange < 0) return "red"
+  //   else return "white"
+  // }
+  // const setIcon = function(rankChange: Number) {
+  //   if (rankChange > 0) return <ArrowUpward color="success" />
+  //   else if (rankChange < 0) return <ArrowDownward color="error" />
+  //   else return <DragHandle />
+  // }
   //close the dialog
   const handleClickOpen = () => {
     router.push(`/${info.market}/${info.ticker}`);
@@ -115,7 +116,10 @@ export default function ScoreItem({
               {createScoreContent(sort, info)}
             </Typography>
           </Grid>
-          {(sort === 5 || sort === 6) ? 
+          <Grid md={4} sm={6} item>
+            <Typography variant='body1'>No rankings available yet</Typography>
+          </Grid>
+          {/* {(sort === 5 || sort === 6) ? 
           <Typography variant='body1'>no rankings available for the year yet</Typography>
           :
           <Grid md={4} sm={6} item>
@@ -123,7 +127,7 @@ export default function ScoreItem({
               {rankChangeMY}
             </Typography>
             {setIcon(rankChangeMY)}
-          </Grid>}
+          </Grid>} */}
         </Grid>
       </ListItemButton>
     </ListItem>
