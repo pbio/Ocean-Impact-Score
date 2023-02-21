@@ -117,7 +117,7 @@ export default function ScoreItem({
             </Typography>
           </Grid>
           <Grid md={4} sm={6} item>
-            <Typography variant='body1'>No rankings available yet</Typography>
+            <Typography variant='body1'>{`rank change: ${info.rank?.[0]-info.rank?.[1]}`}</Typography>
           </Grid>
           {/* {(sort === 5 || sort === 6) ? 
           <Typography variant='body1'>no rankings available for the year yet</Typography>
