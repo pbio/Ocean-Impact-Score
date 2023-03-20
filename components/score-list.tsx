@@ -11,8 +11,9 @@ import { Box,
 import ScoreListItem from './score-list-item';
 import getDate from '../lib/getDate';
 import IndustrySelector from './industry-selector';
+import type { Item, Info } from './types';
 
-export default function ScoreList({ Info }:any ) {
+export default function ScoreList({ Info }:{Info:Info} ) {
     //state
     const [ dateKey, setDateKey ] = React.useState<string>();
     const [open, setOpen] = React.useState<boolean>(false);
@@ -22,7 +23,7 @@ export default function ScoreList({ Info }:any ) {
     const [industry, setIndustry] = React.useState("");
 
     //get date
-    const todayDateStrYMD = getDate();
+    const todayDateStrYMD: string = React.useMemo(()=>getDate(), [getDate]);
     const directionOfRanking = (sort === 1 || sort === 3 || sort === 5)? 1: -1; 
 
     if (Array.isArray(Info))
@@ -81,8 +82,8 @@ export default function ScoreList({ Info }:any ) {
                         </Grid>
                         </ListItem>
                     </List>
-                 { Info                         //All tickers
-                    .sort((a:any, b:any) => {   //sort based on yesterday/lastmonth/year score for ranking
+                 { [...Info]                         //All tickers
+                    .sort((a:Item, b:Item) => {   //sort based on yesterday/lastmonth/year score for ranking
                         switch (sort) {
                             case 1: return b.dailyScores[1][1] - a.dailyScores[1][1];
                             case 2: return a.dailyScores[1][1] - b.dailyScores[1][1];
@@ -97,7 +98,7 @@ export default function ScoreList({ Info }:any ) {
                         element.rank = [directionOfRanking * index];
                         return element;
                     }) 
-                    .sort((a:any, b:any) => {   //sort tickers based on latest score
+                    .sort((a:Item, b:Item) => {   //sort tickers based on latest score
                             switch (sort) {
                                 case 1: return b.dailyScores[0][1] - a.dailyScores[0][1];
                                 case 2: return a.dailyScores[0][1] - b.dailyScores[0][1];

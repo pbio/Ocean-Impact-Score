@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import ListItem from "@mui/material/ListItem";
@@ -9,31 +10,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { addTicker } from "./select-ticker-slice";
-
-interface Item {
-  ticker: string;
-  daily: any;
-  monthly: any;
-  yearly: any;
-  ranking: { year: number; month: number; day: number };
-  rank: number[];
-}
-interface Info {
-  Exchange: string;
-  ISIN: string;
-  Location: string;
-  Name: string;
-  RelatedCompanies: any;
-  Sector: string;
-  class: string;
-  currency: string;
-  market: string;
-  ticker: string;
-  dailyScores: [string, number][];
-  monthlyScores: [string, number][];
-  yearlyScores: [string, number][];
-  rank:number[];
-}
+import type { Item, Info } from './types';
 
 interface CustomPageProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,17 +41,17 @@ export default function ScoreItem({
   //   else return <DragHandle />
   // }
   //close the dialog
-  const handleClickOpen = () => {
+  const handleClickOpen = React.useCallback(() => {
     router.push(`/${info.market}/${info.ticker}`);
     setOpen(true);
     //setCompany(data);
     //dispatch(addTicker(data))
-  };
+  }, [info]);
   const handleClose = () => {
     setOpen(false);
   };
   //Show the right score based on day/month/year view
-  const createScoreContent = function (sort: number, info: any) {
+  const createScoreContent:string = React.useMemo(() => {
     switch (sort) {
       case 1:
       case 2:
@@ -91,10 +68,11 @@ export default function ScoreItem({
         return info.yearlyScores[0][1]
           ? "This year's Score: " + info.yearlyScores[0][1].toFixed(2)
           : "No score available";
-      default:
-        break;
     }
-  };
+    return "No score available"
+  }, [info, sort] );
+
+
   return (
     <ListItem>
       <ListItemButton onClick={handleClickOpen} sx={{ borderRadius: "16px" }}>
@@ -113,7 +91,7 @@ export default function ScoreItem({
           </Grid>
           <Grid md={4} sm={6} item>
             <Typography variant='body1'>
-              {createScoreContent(sort, info)}
+              {createScoreContent}
             </Typography>
           </Grid>
           <Grid md={4} sm={6} item>
